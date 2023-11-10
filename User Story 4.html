@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Story 4: Cadastro de InscricaoDisciplina</title>
+<style>
+  /* Style reset and base styles */
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f5f7;
+    margin: 0;
+    padding: 20px;
+  }
+  .container {
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: auto;
+    max-width: 960px;
+  }
+  .user-story-header {
+    background-color: #0052cc;
+    color: #fff;
+    padding: 10px;
+    border-radius: 4px 4px 0 0;
+  }
+  .user-story-title {
+    margin: 0;
+  }
+  .user-story-content {
+    padding: 20px;
+    background: #f8f9fa;
+    border: 1px solid #dfe1e6;
+    border-radius: 0 0 4px 4px;
+    margin-top: -1px;
+  }
+  h2 {
+    color: #172b4d;
+  }
+  p {
+    color: #5e6c84;
+  }
+  /* Custom styles for nested list */
+  .criteria-list {
+    background: #fff;
+    list-style: none;
+    padding-left: 0;
+    border: 1px solid #dfe1e6;
+    border-radius: 4px;
+  }
+  .criteria-list li {
+    padding: 10px;
+    border-bottom: 1px solid #dfe1e6;
+  }
+  .criteria-list li:last-child {
+    border-bottom: none;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="user-story-header">
+      <h1 class="user-story-title">User Story 4: Cadastro de InscricaoDisciplina</h1>
+    </div>
+    <div class="user-story-content">
+      <h2>Descrição:</h2>
+      <p>Como usuário, quero poder adicionar, visualizar, modificar e remover inscrições em disciplinas para controlar as matrículas dos alunos.</p>
+      <h2>Critérios de Aceite:</h2>
+      <ul class="criteria-list">
+        <li>
+          <strong>Implementação das Funções CRUD:</strong>
+          <ul class="criteria-sublist">
+            <li><code>createInscricaoDisciplina</code>: Deve permitir a criação de uma nova inscrição, verificando a existência do aluno e da disciplina.</li>
+            <li><code>readInscricaoDisciplina</code>: Deve oferecer uma visualização detalhada de uma inscrição específica.</li>
+            <li><code>updateInscricaoDisciplina</code>: Deve atualizar os detalhes de uma inscrição existente.</li>
+            <li><code>deleteInscricaoDisciplina</code>: Deve excluir uma inscrição existente.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Validação de Matrícula e Disciplina:</strong>
+          <p class="details">Antes da inscrição, é necessário verificar se a matrícula do aluno e o código da disciplina estão corretos e existem no sistema.</p>
+        </li>
+        <li>
+          <strong>Validação da Data de Inscrição:</strong>
+          <p class="details">A data de inscrição deve ser verificada para assegurar que está dentro do período permitido.</p>
+        </li>
+        <li>
+          <strong>Feedback ao Usuário:</strong>
+          <p class="details">Mensagens indicativas devem ser fornecidas após a conclusão bem-sucedida ou falha de cada operação.</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

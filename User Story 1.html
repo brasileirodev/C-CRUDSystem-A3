@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Story 1: Cadastro de TipoCurso</title>
+<style>
+  /* Style reset and base styles */
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f5f7;
+    margin: 0;
+    padding: 20px;
+  }
+  .container {
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: auto;
+    max-width: 960px;
+  }
+  .user-story-header {
+    background-color: #0052cc;
+    color: #fff;
+    padding: 10px;
+    border-radius: 4px 4px 0 0;
+  }
+  .user-story-title {
+    margin: 0;
+  }
+  .user-story-content {
+    padding: 20px;
+    background: #f8f9fa;
+    border: 1px solid #dfe1e6;
+    border-radius: 0 0 4px 4px;
+    margin-top: -1px;
+  }
+  h2 {
+    color: #172b4d;
+  }
+  p {
+    color: #5e6c84;
+  }
+  /* Custom styles for nested list */
+  .criteria-list {
+    background: #fff;
+    list-style: none;
+    padding-left: 0;
+    border: 1px solid #dfe1e6;
+    border-radius: 4px;
+  }
+  .criteria-list li {
+    padding: 10px;
+    border-bottom: 1px solid #dfe1e6;
+  }
+  .criteria-list li:last-child {
+    border-bottom: none;
+  }
+  .criteria-sublist {
+    list-style: none;
+    padding-left: 20px;
+    border-left: 2px solid #dfe1e6;
+    margin-top: 5px;
+  }
+  .criteria-sublist li {
+    padding: 5px 0;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="user-story-header">
+      <h1 class="user-story-title">User Story 1: Cadastro de TipoCurso</h1>
+    </div>
+    <div class="user-story-content">
+      <h2>Descrição:</h2>
+      <p>Como usuário, quero poder adicionar, visualizar, modificar e remover tipos de cursos para gerenciar as opções de curso disponíveis.</p>
+      <h2>Critérios de Aceite:</h2>
+      <ul class="criteria-list">
+        <li>
+          <strong>Implementação das Funções CRUD:</strong>
+          <ul class="sub-criteria">
+            <li><code>createTipoCurso</code>: Deve gerar um novo objeto TipoCurso com um código único e adicionar ao array.</li>
+            <li><code>readTipoCurso</code>: Deve permitir a visualização dos detalhes de cada TipoCurso cadastrado.</li>
+            <li><code>updateTipoCurso</code>: Deve alterar informações de um TipoCurso existente, identificado pelo seu código.</li>
+            <li><code>deleteTipoCurso</code>: Deve remover um TipoCurso existente do array, identificado pelo seu código.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Validação de Código Único:</strong>
+          <p class="details">Antes da inserção, verificar se o código já existe no array para evitar duplicatas.</p>
+        </li>
+        <li>
+          <strong>Operações no Array de TipoCurso:</strong>
+          <p class="details">Todas as funções CRUD devem interagir com um array central de TipoCurso, realizando as operações necessárias.</p>
+        </li>
+        <li>
+          <strong>Feedback ao Usuário:</strong>
+          <p class="details">Após cada operação, exibir mensagens claras de sucesso ou de erro, informando o resultado da operação.</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
+     
