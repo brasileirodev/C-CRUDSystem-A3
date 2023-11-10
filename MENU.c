@@ -36,7 +36,7 @@ void main(){
                 scanf("%d", &menu);
                 
                 while ( (menu > 5) || (menu < 1) ){
-                        printf("Digite um menu válido.\n");
+                        printf("Digite uma opção válida.\n");
                         scanf("%d", &menu);
                 }
                         
