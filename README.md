@@ -43,11 +43,11 @@ O projeto inclui quatro principais funcionalidades, cada uma implementada como u
 - Este é um projeto de grupo para fins acadêmicos. Contribuições externas não são esperadas, mas feedback é bem-vindo.
 
 ## Autores
-- Nome do Aluno 1
-- Nome do Aluno 2
-- Nome do Aluno 3
-- Nome do Aluno 4
-- Nome do Aluno 5
+Pedro Soares
+Marcel Brasileiro
+Hector Valente
+Lucas Torres
+Nathan Munoz
 
 ## Licença
 - Este projeto é distribuído sob a Licença MIT.
@@ -56,7 +56,7 @@ O projeto inclui quatro principais funcionalidades, cada uma implementada como u
 - 28/11/2023
 
 ## Contato
-- E-mail do responsável pelo projeto: [email@example.com](mailto:email@example.com)
+- E-mail do responsável pelo projeto: [brasileirodev@gmail.com](mailto:brasileirodev@gmail.com)
 
 ## Agradecimentos
 - Agradece-se aos professores e colegas de classe pelo suporte durante o desenvolvimento do projeto.
