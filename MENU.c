@@ -26,16 +26,16 @@ void main(){
                 printf("| 1 - CADASTRO ALUNO                                                                      |\n"); 
                 printf("| 2 - CADASTRO TIPO DE CURSO                                                              |\n");
                 printf("| 3 - CADASTRO DISCIPLINA                                                                 |\n");
-                printf("| 4 - INSCRIÇÃO DE DISCIPLINA                                                             |\n");
-                printf("| 5 - SAIR                                                                                |\n");
+                printf("| 4 - INSCRICAO DE DISCIPLINA                                                             |\n");
+                printf("| 0 - SAIR                                                                                |\n");
                 printf("|                                                                                         |\n");    
-                printf("| Digite uma das opção para prosseguir.                                                   |\n");    
+                printf("| Digite uma das opcao para prosseguir.                                                   |\n");    
                 printf("|_________________________________________________________________________________________|\n");
 
 
                 scanf("%d", &menu);
                 
-                while ( (menu > 5) || (menu < 1) ){
+                while ( (menu > 4) || (menu < 0) ){
                         printf("Digite um menu válido.\n");
                         scanf("%d", &menu);
                 }
@@ -53,20 +53,20 @@ void main(){
                                         printf("| MENU SELECIONADO:                                                                       |\n");
                                         printf("|                                                                                         |\n");
                                         bold(1);
-                            printf("| 1 - CADASTRO ALUNO                                                                      |\n");
+                                        printf("| CADASTRO ALUNO                                                                          |\n");
                                         bold(0);
-                                        printf("|   2 - INCLUIR                                                                           |\n");
-                                        printf("|   3 - LEITURA                                                                           |\n");
-                                        printf("|   4 - ALTERAR                                                                           |\n");
-                                        printf("|   5 - DELETAR                                                                           |\n");
-                                        printf("| 6 - VOLTAR                                                                                  |\n");
+                                        printf("|   1 - INCLUIR                                                                           |\n");
+                                        printf("|   2 - LEITURA                                                                           |\n");
+                                        printf("|   3 - ALTERAR                                                                           |\n");
+                                        printf("|   4 - DELETAR                                                                           |\n");
+                                        printf("|   5 - VOLTAR                                                                            |\n");
                                         printf("|                                                                                         |\n"); 
-                                        printf("| Digite uma das operações para prosseguir.                                               |\n");    
+                                        printf("| Digite uma das operacoes para prosseguir.                                               |\n");    
                                         printf("|_________________________________________________________________________________________|\n");
                                         
                                         scanf("%d", &menu);
                                         
-                                        while ( (menu > 6) || (menu < 2) ){
+                                        while ( (menu > 5) || (menu < 1) ){
                                                 printf("Digite um menu válido.\n");
                                                 scanf("%d", &menu);
                                         }
@@ -86,20 +86,20 @@ void main(){
                                         printf("| MENU SELECIONADO:                                                                       |\n");
                                         printf("|                                                                                         |\n");
                                         bold(1);
-                                        printf("| 1 - CADASTRO TIPO DE CURSO                                                              |\n");
+                                        printf("| CADASTRO TIPO DE CURSO                                                              |\n");
                                         bold(0);
-                                        printf("|   2 - INCLUIR                                                                           |\n");
-                                        printf("|   3 - LEITURA                                                                           |\n");
-                                        printf("|   4 - ALTERAR                                                                           |\n");
-                                        printf("|   5 - DELETAR                                                                           |\n");
-                                        printf("| 6 - VOLTAR                                                                                  |\n");
+                                        printf("|   1 - INCLUIR                                                                           |\n");
+                                        printf("|   2 - LEITURA                                                                           |\n");
+                                        printf("|   3 - ALTERAR                                                                           |\n");
+                                        printf("|   4 - DELETAR                                                                           |\n");
+                                        printf("|   5 - VOLTAR                                                                            |\n");
                                         printf("|                                                                                         |\n"); 
-                                        printf("| Digite uma das operações para prosseguir.                                               |\n");    
+                                        printf("| Digite uma das operacoes para prosseguir.                                               |\n");    
                                         printf("|_________________________________________________________________________________________|\n");
                                         
                                         scanf("%d", &menu);
                                         
-                                        while ( (menu > 6) || (menu < 2) ){
+                                        while ( (menu > 5) || (menu < 1) ){
                                                 printf("Digite um menu válido.\n");
                                                 scanf("%d", &menu);
                                         }
@@ -119,20 +119,20 @@ void main(){
                                         printf("| MENU SELECIONADO:                                                                       |\n");
                                         printf("|                                                                                         |\n");
                                         bold(1);
-                                        printf("| 1 - CADASTRO DISCIPLINA                                                                 |\n");
+                                        printf("| CADASTRO DISCIPLINA                                                                     |\n");
                                         bold(0);
-                                        printf("|   2 - INCLUIR                                                                           |\n");
-                                        printf("|   3 - LEITURA                                                                           |\n");
-                                        printf("|   4 - ALTERAR                                                                           |\n");
-                                        printf("|   5 - DELETAR                                                                           |\n");
-                                        printf("| 6 - VOLTAR                                                                                  |\n");
+                                        printf("|   1 - INCLUIR                                                                           |\n");
+                                        printf("|   2 - LEITURA                                                                           |\n");
+                                        printf("|   3 - ALTERAR                                                                           |\n");
+                                        printf("|   4 - DELETAR                                                                           |\n");
+                                        printf("|   5 - VOLTAR                                                                            |\n");
                                         printf("|                                                                                         |\n"); 
-                                        printf("| Digite uma das operações para prosseguir.                                               |\n");    
+                                        printf("| Digite uma das operacoes para prosseguir.                                               |\n");    
                                         printf("|_________________________________________________________________________________________|\n");
                                         
                                         scanf("%d", &menu);
                                         
-                                        while ( (menu > 6) || (menu < 2) ){
+                                        while ( (menu > 5) || (menu < 1) ){
                                                 printf("Digite um menu válido.\n");
                                                 scanf("%d", &menu);
                                         }
@@ -152,20 +152,20 @@ void main(){
                                         printf("| MENU SELECIONADO:                                                                       |\n");
                                         printf("|                                                                                         |\n");
                                         bold(1);
-                                        printf("| 1 - INSCRIÇÃO DE DISCIPLINA                                                             |\n");
+                                        printf("| INSCRIÇÃO DE DISCIPLINA                                                                 |\n");
                                         bold(0);
-                                        printf("|   2 - INCLUIR                                                                           |\n");
-                                        printf("|   3 - LEITURA                                                                           |\n");
-                                        printf("|   4 - ALTERAR                                                                           |\n");
-                                        printf("|   5 - DELETAR                                                                           |\n");
-                                        printf("| 6 - VOLTAR                                                                                  |\n");
+                                        printf("|   1 - INCLUIR                                                                           |\n");
+                                        printf("|   2 - LEITURA                                                                           |\n");
+                                        printf("|   3 - ALTERAR                                                                           |\n");
+                                        printf("|   4 - DELETAR                                                                           |\n");
+                                        printf("|   5 - VOLTAR                                                                            |\n");
                                         printf("|                                                                                         |\n"); 
-                                        printf("| Digite uma das operações para prosseguir.                                               |\n");    
+                                        printf("| Digite uma das operacoes para prosseguir.                                               |\n");    
                                         printf("|_________________________________________________________________________________________|\n");
                                         
                                         scanf("%d", &menu);
                                         
-                                        while ( (menu > 6) || (menu < 2) ){
+                                        while ( (menu > 5) || (menu < 1) ){
                                                 printf("Digite um menu válido.\n");
                                                 scanf("%d", &menu);
                                         }
@@ -173,12 +173,12 @@ void main(){
                                         system("clear");
                                         break;
                                                 
-                                case 5: printf("Você saiu do sistema");
+                                case 0: printf("Você saiu do sistema");
                                                 system("clear");
                                                 break;
                 }
                 
-        }while(menu == 6);
+        }while(menu == 5);
 
 
 }
