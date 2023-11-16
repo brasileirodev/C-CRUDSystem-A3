@@ -1,20 +1,15 @@
 ﻿#include <stdio.h>
 
-
 void bold(int status) {
         static const char *seq[] = {"\x1b[0m", "\x1b[1m"};
         printf("%s", seq[!!status]);
 }
 
-
-void main(){
-
+int main(){
 
         int menu;
 
-
         do{
-        
                 system("clear");
                 
                 printf(" _________________________________________________________________________________________\n");
@@ -179,6 +174,5 @@ void main(){
                 }
                 
         }while(menu == 5);
-
 
 }
