@@ -243,7 +243,7 @@ void bold(int status) {
 }
 
 //METODO TELA DO MENU SECUNDARIO - Padronizacao de menu. Recebe um CHAR com o nome do menu selecionado
-char menuSecundario(char texto[100]){
+void menuSecundario(char texto[100]){
 
     int controle;
 
@@ -333,6 +333,10 @@ int autoincrement(char texto[50]){
     return(increment);
 }
 
+//METODO VALIDAÇÃO CADASTRO MATRICULA - Metodo tem como objetivo garantir que não existe duplicidade na matricula
+
+
+
 //METODO INCLUIR INSCRICAO DE DISCIPLINA - Metodo utilizado para incluir uma nova INSCRICAO DE DISCIPLINA
 void cadastroInscricao(){
 
@@ -361,7 +365,7 @@ void cadastroInscricao(){
 }
 
 //METODO IMPRIMIR INSCRICAO DISCIPLINA - Metodo utilizado para imprimir todas as INSCRICOES DE DISCIPLINAS feitas
-int imprimir(){
+void imprimirInscricao(){
     //char decisao[1];
     for(int i = 0; i < SIZE; i++) {
         if (tabelaInscricao[i].codigo != 0) {
@@ -374,7 +378,7 @@ int imprimir(){
 }
 
 //METODO DELETAR INSCRICAO DE DISCIPLINA - Metodo utilizado para deletar registro de INSCRICAO DE DISCIPLINA
-int deletarInscricao(){
+void deletarInscricao(){
 
     int delete;
     printf("Digite o Codigo de inscricao de disciplina que voce deseja deletar: \n");
@@ -396,7 +400,7 @@ int deletarInscricao(){
 }
 
 //METODO ALTERAR INSCRICAO DE DISCIPLINA - Metodo utilizado para alterar registro de INSCRICAO DE DISCIPLINA
-int alterarInscricao(){
+void alterarInscricao(){
 
     int alt;
     printf("Digite o Codigo de inscricao de disciplina que voce deseja deletar: \n");
@@ -411,8 +415,6 @@ int alterarInscricao(){
     //CONTINUAR
     if (decisao("Voce tem certeza que deseja alterar o registro:\n\n1 - SIM\n2 - NÃO\n") == 1) {
         system("clear");
-        printf("Digite a NOVA MATRICULA do aluno: \n");
-		scanf("%d", &tabelaInscricao[alt-1].matricula);
 		printf("Digite o NOVO CODIGO DA DISCIPLINA do CURSO: \n");
 		scanf("%d", &tabelaInscricao[alt-1].codDisciplina);
 		printf("Digite a NOVA DATA DE INSCRICAO (DDMMAAAA): \n");
@@ -494,7 +496,7 @@ int main() {
 
 					if(menu == 2){
 						system("clear");
-						imprimir();
+						imprimirInscricao();
 
 						//CONTINUAR
 						if (decisao("Deseja retornar ao menu principal?\n\n1 - SIM\n2 - NÃO\n") == 1) {
