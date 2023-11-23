@@ -1,12 +1,13 @@
 //@H�CTOR VALENTE (22/11/2023) - Menu e implementa��o da usabilidade inscri��o de disciplina.
 //@LUCAS (23/11/2023) - Menu e implementa��o da usabilidade cadastro de aluno.
+//@H�CTOR VALENTE (23/11/2023) - Corre��o caracter especial.
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #define SIZE 100
 
-//DECLARAÇÃO DE OBJETOS
+//DECLARACAO DE OBJETOS
 struct inscricaoDisciplina {
     int matricula;
     int codDisciplina;
@@ -20,7 +21,6 @@ struct inscricaoDisciplina {
 #define MAX_NOME 30
 #define MAX_EMAIL 50
 
-
 struct Aluno {
     int matricula;
     char cpf[MAX_CPF];
@@ -31,32 +31,32 @@ struct Aluno {
 };
 
 void imprimirAluno(struct Aluno aluno) {
-    printf("Matrícula: %d\n", aluno.matricula);
+    printf("matricula: %d\n", aluno.matricula);
     printf("CPF: %s\n", aluno.cpf);
     printf("Nome: %s\n", aluno.nome);
     printf("Sexo: %c\n", aluno.sexo);
     printf("Email: %s\n", aluno.email);
-    printf("Código do tipo de curso: %d\n", aluno.codigoTipoCurso);
+    printf("Codigo do tipo de curso: %d\n", aluno.codigoTipoCurso);
 }
 
 void cadastrarAluno(struct Aluno *alunos, int *numAlunos) {
     if (*numAlunos >= MAX_ALUNOS) {
-        printf("Limite máximo de alunos atingido!\n");
+        printf("Limite maximo de alunos atingido!\n");
         return;
     }
 
     struct Aluno novoAluno;
 
-    printf("Digite a matrícula: ");
+    printf("Digite a matricula: ");
     scanf("%d", &novoAluno.matricula);
 
     while (1) {
         printf("Digite o CPF: ");
         scanf("%s", novoAluno.cpf);
 
-        // Verifica se o CPF tem exatamente 11 dígitos
+        // Verifica se o CPF tem exatamente 11 digitos
         if (strlen(novoAluno.cpf) != 11) {
-            printf("CPF inválido.\n");
+            printf("CPF invalido.\n");
         } else {
             break;
         }
@@ -72,7 +72,7 @@ void cadastrarAluno(struct Aluno *alunos, int *numAlunos) {
     scanf("%s", novoAluno.email);
 
 
-    printf("Digite o código do tipo de curso: ");
+    printf("Digite o Codigo do tipo de curso: ");
     scanf("%d", &novoAluno.codigoTipoCurso);
 
     // Copia o novoAluno para o array de alunos
@@ -90,21 +90,21 @@ void cadastrarAluno(struct Aluno *alunos, int *numAlunos) {
 void atualizarAluno(struct Aluno *alunos, int numAlunos) {
     int matricula;
 
-    printf("Digite a matrícula do aluno que deseja atualizar: ");
+    printf("Digite a matricula do aluno que deseja atualizar: ");
     scanf("%d", &matricula);
 
     for (int contador = 0; contador < numAlunos; contador++) {
         if (alunos[contador].matricula == matricula) {
-            printf("Digite a nova matrícula: ");
+            printf("Digite a nova matricula: ");
             scanf("%d", &alunos[contador].matricula);
 
             while (1) {
                 printf("Digite o novo CPF: ");
                 scanf("%s", alunos[contador].cpf);
 
-                // Verifica se o CPF tem exatamente 11 dígitos
+                // Verifica se o CPF tem exatamente 11 digitos
                 if (strlen(alunos[contador].cpf) != 11) {
-                    printf("CPF inválido.\n");
+                    printf("CPF invalido.\n");
                 } else {
                     break;
                 }
@@ -119,13 +119,13 @@ void atualizarAluno(struct Aluno *alunos, int numAlunos) {
             printf("Digite o novo email: ");
             scanf("%s", alunos[contador].email);
 
-            // Verifica se os campos de nome e email não excedem os limites máximos
+            // Verifica se os campos de nome e email não excedem os limites maximos
             if (strlen(alunos[contador].nome) > MAX_NOME || strlen(alunos[contador].email) > MAX_EMAIL) {
-                printf("Um ou mais campos excedem o tamanho máximo permitido.\n");
+                printf("Um ou mais campos excedem o tamanho maximo permitido.\n");
                 return;
             }
 
-            printf("Digite o novo código do tipo de curso: ");
+            printf("Digite o novo Codigo do tipo de curso: ");
             scanf("%d", &alunos[contador].codigoTipoCurso);
 
             printf("Aluno atualizado com sucesso!\n");
@@ -137,13 +137,13 @@ void atualizarAluno(struct Aluno *alunos, int numAlunos) {
         }
     }
 
-    printf("Aluno com a matrícula %d não encontrado.\n", matricula);
+    printf("Aluno com a matricula %d não encontrado.\n", matricula);
 }
 
 void listarAluno(struct Aluno *alunos, int numAlunos) {
     int matricula;
 
-    printf("Digite a matrícula do aluno:");
+    printf("Digite a matricula do aluno:");
     scanf("%d", &matricula);
 
     for (int contador = 0; contador < numAlunos; contador++) {
@@ -154,13 +154,13 @@ void listarAluno(struct Aluno *alunos, int numAlunos) {
         }
     }
 
-    printf("Aluno com a matrícula %d não encontrado.\n", matricula);
+    printf("Aluno com a matricula %d não encontrado.\n", matricula);
 }
 
 void excluirAluno(struct Aluno *alunos, int *numAlunos) {
     int matricula;
 
-    printf("Digite a matrícula do aluno que deseja excluir: ");
+    printf("Digite a matricula do aluno que deseja excluir: ");
     scanf("%d", &matricula);
 
     for (int contador = 0; contador < *numAlunos; contador++) {
@@ -169,12 +169,12 @@ void excluirAluno(struct Aluno *alunos, int *numAlunos) {
                 alunos[contadorY] = alunos[contadorY + 1];
             }
             (*numAlunos)--;
-            printf("Aluno com a matrícula %d excluído com sucesso!\n", matricula);
+            printf("Aluno com a matricula %d excluido com sucesso!\n", matricula);
             return;
         }
     }
 
-    printf("Aluno com a matrícula %d não encontrado.\n", matricula);
+    printf("Aluno com a matricula %d não encontrado.\n", matricula);
 }
 
 void opcaoAluno(struct Aluno *alunos, int *numAlunos) {
@@ -215,7 +215,7 @@ void opcaoAluno(struct Aluno *alunos, int *numAlunos) {
                 break;
 
                     default:
-                        printf("Opção inválida. Digite uma opção válida.\n");
+                        printf("Opcao invalida. Digite uma Opcao válida.\n");
                         }
                     } while (menualuno != 5);}
         
@@ -231,18 +231,18 @@ struct tipoCurso {
     int codigo;
 };
 
-//DECLARAÇÃO DE VARIAVEIS GLOBAIS
+//DECLARACAO DE VARIAVEIS GLOBAIS
 struct inscricaoDisciplina tabelaInscricao[SIZE]; //ARRAY
 struct disciplina tabelaDisciplina[SIZE]; //ARRAY
 struct tipoCurso tabelaCurso[SIZE]; //ARRAY
 
-//MÉTODO NEGRITO - Coloca um texto em negrito. Utilize bold(1) para iniciar e bold(0) para finalizar
+//METODO NEGRITO - Coloca um texto em negrito. Utilize bold(1) para iniciar e bold(0) para finalizar
 void bold(int status) {
 	static const char *seq[] = {"\x1b[0m", "\x1b[1m"};
 	printf("%s", seq[!!status]);
 }
 
-//MÉTODO TELA DO MENU SECUNDÝRIO - Padronização de menu. Recebe um CHAR com o nome do menu selecionado
+//METODO TELA DO MENU SECUNDÝRIO - Padronização de menu. Recebe um CHAR com o nome do menu selecionado
 char menuSecundario(char texto[100]){
     
     int controle;
@@ -269,12 +269,12 @@ char menuSecundario(char texto[100]){
 	printf("|   4 - DELETAR                                                                           |\n");
 	printf("|   5 - VOLTAR                                                                        	  |\n");
 	printf("|                                                                                         |\n"); 
-	printf("| Digite uma das operações para prosseguir.                                               |\n");    
+	printf("| Digite uma das operacoes para prosseguir.                                               |\n");    
 	printf("|_________________________________________________________________________________________|\n");
 
 }
 
-//MÉTODO DECISÃO - Tem como objetivo receber um CHAR para imprimir na tela e perguntar ao usuário se ele deseja continuar
+//METODO DECISAO - Tem como objetivo receber um CHAR para imprimir na tela e perguntar ao usuario se ele deseja continuar
 int decisao(char texto[200]){
     int decisao;
     printf("%s\n", texto);
@@ -282,41 +282,41 @@ int decisao(char texto[200]){
         
     while (decisao != 1 && decisao != 2) {
         system("clear");
-        printf("Dígito inválida, por favor digite (1 - SIM|2 - NÃO): \n"); 
+        printf("Digito invalido, por favor digite (1 - SIM|2 - NÃO): \n"); 
         scanf("%s", &decisao);
     }
     return decisao;
     system("clear");
 }
 
-//MÉTODO IMPRIMIR INSCRIÇÃO DISCIPLINA - Método utilizado para imprimir todas as INSCRIÇÕES DE DISCIPLINAS feitas
+//METODO IMPRIMIR INSCRICAO DISCIPLINA - Metodo utilizado para imprimir todas as INSCRICOES DE DISCIPLINAS feitas
 int imprimir(){
     //char decisao[1];
     for(int i = 0; i < SIZE; i++) {
         if (tabelaInscricao[i].codigo != 0) {
-            printf("Código: %d", tabelaInscricao[i].codigo);
+            printf("Codigo: %d", tabelaInscricao[i].codigo);
             printf("\nMatricula: %d", tabelaInscricao[i].matricula);
             printf("\nCod. Disciplina: %d", tabelaInscricao[i].codDisciplina);
-            printf("\nData de inscrição: %d\n", tabelaInscricao[i].dataInscricao);
+            printf("\nData de inscricao: %d\n", tabelaInscricao[i].dataInscricao);
         } 
     }
 }
 
-//MÉTODO DELETAR INSCRIÇÃO DE DISCIPLINA - Método utilizado para deletar registro de INSCRIÇÃO DE DISCIPLINA
+//METODO DELETAR INSCRICAO DE DISCIPLINA - Metodo utilizado para deletar registro de INSCRICAO DE DISCIPLINA
 int deletarInscricao(){
     
     int delete;
-    printf("Digite o código de inscrição de disciplina que você deseja deletar: \n");
+    printf("Digite o Codigo de inscricao de disciplina que voce deseja deletar: \n");
     scanf("%d", &delete);
     
     system("clear");
-	printf("Código: %d", tabelaInscricao[delete-1].codigo);
+	printf("Codigo: %d", tabelaInscricao[delete-1].codigo);
     printf("\nMatricula: %d", tabelaInscricao[delete-1].matricula);
     printf("\nCod. Disciplina: %d", tabelaInscricao[delete-1].codDisciplina);
-    printf("\nData de inscrição: %d\n\n", tabelaInscricao[delete-1].dataInscricao);
+    printf("\nData de inscricao: %d\n\n", tabelaInscricao[delete-1].dataInscricao);
     
     //CONTINUAR
-    if (decisao("Você tem certeza que deseja excluir o registro:\n\n1 - SIM\n2 - NÃO\n") == 1) {
+    if (decisao("Voce tem certeza que deseja excluir o registro:\n\n1 - SIM\n2 - NÃO\n") == 1) {
         tabelaInscricao[delete-1].codigo = NULL;
         tabelaInscricao[delete-1].matricula = NULL;
         tabelaInscricao[delete-1].codDisciplina = NULL;
@@ -324,21 +324,21 @@ int deletarInscricao(){
 	}
 }
 
-//MÉTODO ALTERAR INSCRIÇÃO DE DISCIPLINA - Método utilizado para alterar registro de INSCRIÇÃO DE DISCIPLINA
+//METODO ALTERAR INSCRICAO DE DISCIPLINA - Metodo utilizado para alterar registro de INSCRICAO DE DISCIPLINA
 int alterarInscricao(){
     
     int alt;
-    printf("Digite o código de inscrição de disciplina que você deseja deletar: \n");
+    printf("Digite o Codigo de inscricao de disciplina que voce deseja deletar: \n");
     scanf("%d", &alt);
     
     system("clear");
-	printf("Código: %d", tabelaInscricao[alt-1].codigo);
+	printf("Codigo: %d", tabelaInscricao[alt-1].codigo);
     printf("\nMatricula: %d", tabelaInscricao[alt-1].matricula);
     printf("\nCod. Disciplina: %d", tabelaInscricao[alt-1].codDisciplina);
-    printf("\nData de inscrição: %d\n\n", tabelaInscricao[alt-1].dataInscricao);
+    printf("\nData de inscricao: %d\n\n", tabelaInscricao[alt-1].dataInscricao);
     
     //CONTINUAR
-    if (decisao("\nVocê tem certeza que deseja alterar o registro:\n\n1 - SIM\n2 - NÃO\n") == 1) {
+    if (decisao("\nVoce tem certeza que deseja alterar o registro:\n\n1 - SIM\n2 - NÃO\n") == 1) {
         system("clear");
         printf("Digite a NOVA MATRICULA do aluno: \n");
 		scanf("%d", &tabelaInscricao[alt-1].matricula);
@@ -349,18 +349,18 @@ int alterarInscricao(){
 	}
 }
 
-//MÉTODO VALIDA MENU - Tem como objetivo receber dois INT re range do menu
+//METODO VALIDA MENU - Tem como objetivo receber dois INT re range do menu
 int validaMenu(int maior, int menor){
     int menu;
     scanf("%d", &menu);
     while ( (menu > maior) || (menu < menor) ){
-		printf("Digite um menu válido.\n");
+		printf("Digite um menu valido.\n");
 	    scanf("%d", &menu);	
 	}
 	return menu;
 }
 
-//MÉTODO DE AUTOINCREMENT - RECEBER UM CHAR PARA ESCOLHER EM QUAL TABELA IRÝ REALIZAR O AUTOINCREMENT
+//METODO DE AUTOINCREMENT - RECEBER UM CHAR PARA ESCOLHER EM QUAL TABELA IRAO REALIZAR O AUTOINCREMENT
 int autoincrement(char texto[50]){
     
     int increment;
@@ -394,6 +394,8 @@ int autoincrement(char texto[50]){
 
 //PROGRAMA PRINCIPAL
 int main() {
+    
+    system("clear");
     struct Aluno alunos[MAX_ALUNOS];
     int numAlunos = 0;
     int menu;
@@ -408,10 +410,10 @@ int main() {
         printf("| 1 - CADASTRO ALUNO                                                                      |\n"); 
         printf("| 2 - CADASTRO TIPO DE CURSO                                                              |\n");
         printf("| 3 - CADASTRO DISCIPLINA                                                                 |\n");
-        printf("| 4 - INSCRIÇÃO DE DISCIPLINA                                                             |\n");
+        printf("| 4 - INSCRICAO DE DISCIPLINA                                                             |\n");
         printf("| 0 - SAIR                                                                                |\n");
         printf("|                                                                                         |\n");    
-        printf("| Digite uma das opção para prosseguir.                                                   |\n");    
+        printf("| Digite uma das opcao para prosseguir.                                                   |\n");    
         printf("|_________________________________________________________________________________________|\n");
 
         menu = validaMenu(4, 0);
@@ -513,7 +515,7 @@ int main() {
 						
 						system("clear");
 						
-					}while(menu == 6); //MENU IGUAL A 6 VOLTA PARA O MESMO MENU, PORÉM IGUAL 5 RETORNA PARA O PRINCIPAL
+					}while(menu == 6); //MENU IGUAL A 6 VOLTA PARA O MESMO MENU, POREM IGUAL 5 RETORNA PARA O PRINCIPAL
 					break;
 						
 			case 0: 
@@ -523,10 +525,10 @@ int main() {
 					break;
 				
 		}    
-        } while(menu != 0);  // Continua enquanto o usuário não escolher sair
+        } while(menu != 0);  // Continua enquanto o usuario não escolher sair
 
     return 0;
 }
 	//SAIR DO PROGRAMA
 	//system("clear");
-	//decisao("ALERTA! Você irá sair do programa, deseja realmente sair?");
+	//decisao("ALERTA! Voce irá sair do programa, deseja realmente sair?");
