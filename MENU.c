@@ -1,4 +1,6 @@
-﻿#include <stdio.h>
+﻿//@HECTOR VALENTE (23/11/2023) - EXEMPLO DE COMENTÁRIO DE VERSIONAMENTO DO CÓDIGO
+
+#include <stdio.h>
 #include <string.h>
 #define SIZE 100
 
