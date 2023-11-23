@@ -423,11 +423,11 @@ int main() {
 	                        listarAluno(alunos, numAlunos);
 	                    } else if (submenu == 3) {
 	                        system("clear");
-	                        printf("Atualização de Aluno\n");
+	                        printf("Atualizacao de Aluno\n");
 	                        atualizarAluno(alunos, numAlunos);
 	                    } else if (submenu == 4) {
 	                        system("clear");
-	                        printf("Exclusão de Aluno\n");
+	                        printf("Exclusao de Aluno\n");
 	                        excluirAluno(alunos, &numAlunos);
 	                    } else if (submenu == 5) {
 	                        // Voltar ao menu principal
