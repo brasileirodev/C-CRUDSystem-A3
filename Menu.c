@@ -1,3 +1,6 @@
+//@H…CTOR VALENTE (22/11/2023) - Menu e implementaÁ„o da usabilidade inscriÁ„o de disciplina.
+//@LUCAS (23/11/2023) - Menu e implementaÁ„o da usabilidade cadastro de aluno.
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -239,7 +242,7 @@ void bold(int status) {
 	printf("%s", seq[!!status]);
 }
 
-//M√âTODO TELA DO MENU SECUND√ÅRIO - Padroniza√ß√£o de menu. Recebe um CHAR com o nome do menu selecionado
+//M√âTODO TELA DO MENU SECUND√ùRIO - Padroniza√ß√£o de menu. Recebe um CHAR com o nome do menu selecionado
 char menuSecundario(char texto[100]){
     
     int controle;
@@ -357,7 +360,7 @@ int validaMenu(int maior, int menor){
 	return menu;
 }
 
-//M√âTODO DE AUTOINCREMENT - RECEBER UM CHAR PARA ESCOLHER EM QUAL TABELA IR√Å REALIZAR O AUTOINCREMENT
+//M√âTODO DE AUTOINCREMENT - RECEBER UM CHAR PARA ESCOLHER EM QUAL TABELA IR√ù REALIZAR O AUTOINCREMENT
 int autoincrement(char texto[50]){
     
     int increment;
