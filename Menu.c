@@ -1,6 +1,6 @@
-//@H�CTOR VALENTE (22/11/2023) - Menu e implementa��o da usabilidade inscri��o de disciplina.
-//@LUCAS (23/11/2023) - Menu e implementa��o da usabilidade cadastro de aluno.
-//@H�CTOR VALENTE (23/11/2023) - Corre��o caracter especial + fun��o inclus�o em m�todo
+//@HÉCTOR VALENTE (22/11/2023) - Menu e implementação da usabilidade inscrição de disciplina.
+//@LUCAS (23/11/2023) - Menu e implementação da usabilidade cadastro de aluno.
+//@HÉCTOR VALENTE (23/11/2023) - Correção caracter especial + função inclusão em método
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,11 +15,12 @@ struct inscricaoDisciplina {
     int codigo;
 };
 
-#define MAX_ALUNOS 10
+#define MAX_ALUNOS 100
 #define MAX_MATRICULA 20
 #define MAX_CPF 11 
 #define MAX_NOME 30
 #define MAX_EMAIL 50
+
 
 struct Aluno {
     int matricula;
@@ -31,32 +32,32 @@ struct Aluno {
 };
 
 void imprimirAluno(struct Aluno aluno) {
-    printf("matricula: %d\n", aluno.matricula);
+    printf("Matrícula: %d\n", aluno.matricula);
     printf("CPF: %s\n", aluno.cpf);
     printf("Nome: %s\n", aluno.nome);
     printf("Sexo: %c\n", aluno.sexo);
     printf("Email: %s\n", aluno.email);
-    printf("Codigo do tipo de curso: %d\n", aluno.codigoTipoCurso);
+    printf("Código do tipo de curso: %d\n", aluno.codigoTipoCurso);
 }
 
-void cadastrarAluno(struct Aluno *alunos, int *numAlunos) {
+void cadastrarAluno(struct Aluno alunos[], int *numAlunos) {
     if (*numAlunos >= MAX_ALUNOS) {
-        printf("Limite maximo de alunos atingido!\n");
+        printf("Limite máximo de alunos atingido!\n");
         return;
     }
 
     struct Aluno novoAluno;
 
-    printf("Digite a matricula: ");
+    printf("Digite a matrícula: ");
     scanf("%d", &novoAluno.matricula);
 
     while (1) {
         printf("Digite o CPF: ");
         scanf("%s", novoAluno.cpf);
 
-        // Verifica se o CPF tem exatamente 11 digitos
+        // Verifica se o CPF tem exatamente 11 dígitos
         if (strlen(novoAluno.cpf) != 11) {
-            printf("CPF invalido.\n");
+            printf("CPF inválido.\n");
         } else {
             break;
         }
@@ -71,15 +72,14 @@ void cadastrarAluno(struct Aluno *alunos, int *numAlunos) {
     printf("Digite o email: ");
     scanf("%s", novoAluno.email);
 
-
-    printf("Digite o Codigo do tipo de curso: ");
+    printf("Digite o código do tipo de curso: ");
     scanf("%d", &novoAluno.codigoTipoCurso);
 
     // Copia o novoAluno para o array de alunos
     alunos[*numAlunos] = novoAluno;
 
     (*numAlunos)++;
-    
+
     printf("Aluno cadastrado com sucesso!\n");
 
     // Imprime os dados do aluno cadastrado
@@ -87,24 +87,25 @@ void cadastrarAluno(struct Aluno *alunos, int *numAlunos) {
     imprimirAluno(novoAluno);
 }
 
-void atualizarAluno(struct Aluno *alunos, int numAlunos) {
+
+void atualizarAluno(struct Aluno alunos[], int numAlunos) {
     int matricula;
 
-    printf("Digite a matricula do aluno que deseja atualizar: ");
+    printf("Digite a matrícula do aluno que deseja atualizar: ");
     scanf("%d", &matricula);
 
     for (int contador = 0; contador < numAlunos; contador++) {
         if (alunos[contador].matricula == matricula) {
-            printf("Digite a nova matricula: ");
+            printf("Digite a nova matrícula: ");
             scanf("%d", &alunos[contador].matricula);
 
             while (1) {
                 printf("Digite o novo CPF: ");
                 scanf("%s", alunos[contador].cpf);
 
-                // Verifica se o CPF tem exatamente 11 digitos
+                // Verifica se o CPF tem exatamente 11 dígitos
                 if (strlen(alunos[contador].cpf) != 11) {
-                    printf("CPF invalido.\n");
+                    printf("CPF inválido.\n");
                 } else {
                     break;
                 }
@@ -119,13 +120,13 @@ void atualizarAluno(struct Aluno *alunos, int numAlunos) {
             printf("Digite o novo email: ");
             scanf("%s", alunos[contador].email);
 
-            // Verifica se os campos de nome e email não excedem os limites maximos
+            // Verifica se os campos de nome e email não excedem os limites máximos
             if (strlen(alunos[contador].nome) > MAX_NOME || strlen(alunos[contador].email) > MAX_EMAIL) {
-                printf("Um ou mais campos excedem o tamanho maximo permitido.\n");
+                printf("Um ou mais campos excedem o tamanho máximo permitido.\n");
                 return;
             }
 
-            printf("Digite o novo Codigo do tipo de curso: ");
+            printf("Digite o novo código do tipo de curso: ");
             scanf("%d", &alunos[contador].codigoTipoCurso);
 
             printf("Aluno atualizado com sucesso!\n");
@@ -137,13 +138,14 @@ void atualizarAluno(struct Aluno *alunos, int numAlunos) {
         }
     }
 
-    printf("Aluno com a matricula %d não encontrado.\n", matricula);
+    printf("Aluno com a matrícula %d não encontrado.\n", matricula);
 }
 
-void listarAluno(struct Aluno *alunos, int numAlunos) {
+
+void listarAluno(struct Aluno alunos[], int numAlunos) {
     int matricula;
 
-    printf("Digite a matricula do aluno:");
+    printf("Digite a matrícula do aluno:");
     scanf("%d", &matricula);
 
     for (int contador = 0; contador < numAlunos; contador++) {
@@ -154,13 +156,13 @@ void listarAluno(struct Aluno *alunos, int numAlunos) {
         }
     }
 
-    printf("Aluno com a matricula %d não encontrado.\n", matricula);
+    printf("Aluno com a matrícula %d não encontrado.\n", matricula);
 }
 
-void excluirAluno(struct Aluno *alunos, int *numAlunos) {
+void excluirAluno(struct Aluno alunos[], int *numAlunos) {
     int matricula;
 
-    printf("Digite a matricula do aluno que deseja excluir: ");
+    printf("Digite a matrícula do aluno que deseja excluir: ");
     scanf("%d", &matricula);
 
     for (int contador = 0; contador < *numAlunos; contador++) {
@@ -169,58 +171,13 @@ void excluirAluno(struct Aluno *alunos, int *numAlunos) {
                 alunos[contadorY] = alunos[contadorY + 1];
             }
             (*numAlunos)--;
-            printf("Aluno com a matricula %d excluido com sucesso!\n", matricula);
+            printf("Aluno com a matrícula %d excluído com sucesso!\n", matricula);
             return;
         }
     }
 
-    printf("Aluno com a matricula %d não encontrado.\n", matricula);
+    printf("Aluno com a matrícula %d não encontrado.\n", matricula);
 }
-
-void opcaoAluno(struct Aluno *alunos, int *numAlunos) {
-    int menualuno;
-
-    do {
-        bold(1);
-        printf("1 - CADASTRAR ALUNO\n");
-        printf("2 - ATUALIZAR ALUNO\n");
-        printf("3 - LISTAR ALUNO\n");
-        printf("4 - EXCLUIR ALUNO\n");
-        printf("5 - VOLTAR AO MENU PRINCIPAL\n");
-        bold(0);
-
-        scanf("%d", &menualuno);
-
-                // Limpa o buffer de entrada
-        getchar();
-
-        switch (menualuno) {
-            case 1:
-                cadastrarAluno(alunos, numAlunos);
-                break;
-
-            case 2:
-                atualizarAluno(alunos, *numAlunos);
-                break;
-
-            case 3:
-                listarAluno(alunos, *numAlunos);
-                break;
-
-            case 4:
-                excluirAluno(alunos, numAlunos);
-                break;
-
-            case 5:
-                break;
-
-                    default:
-                        printf("Opcao invalida. Digite uma Opcao válida.\n");
-                        }
-                    } while (menualuno != 5);}
-        
-
-
 
 
 struct disciplina {
@@ -247,7 +204,7 @@ void menuSecundario(char texto[100]){
 
     int controle;
 
-    controle = strlen(texto); //FUN�AO QUE CONTA CARACTERE
+    controle = strlen(texto); //FUNÇAO QUE CONTA CARACTERE
 	printf(" _________________________________________________________________________________________\n");
 	printf("|                                                                                         |\n");
 	printf("| SISTEMA DE CADASTRO                                                                     |\n");
@@ -294,7 +251,7 @@ int decisao(char texto[200]){
 
     while (decisao != 1 && decisao != 2) {
         system("clear");
-        printf("Digito invalido, por favor digite (1 - SIM|2 - N�O): \n"); 
+        printf("Digito invalido, por favor digite (1 - SIM|2 - NÃO): \n"); 
         scanf("%s", &decisao);
     }
     return decisao;
@@ -333,7 +290,7 @@ int autoincrement(char texto[50]){
     return(increment);
 }
 
-//METODO VALIDA��O CADASTRO MATRICULA - Metodo tem como objetivo garantir que n�o existe duplicidade na matricula
+//METODO VALIDAÇÃO CADASTRO MATRICULA - Metodo tem como objetivo garantir que não existe duplicidade na matricula
 
 
 
@@ -357,7 +314,7 @@ void cadastroInscricao(){
 		system("clear");
 
 		//CONTINUAR
-		if (decisao("Deseja continuar incluindo matricula?\n\n1 - SIM\n2 - N�O\n") == 2) {
+		if (decisao("Deseja continuar incluindo matricula?\n\n1 - SIM\n2 - NÃO\n") == 2) {
 			break;
 			system("clear");
 		}
@@ -391,7 +348,7 @@ void deletarInscricao(){
     printf("\nData de inscricao: %d\n\n", tabelaInscricao[delete-1].dataInscricao);
 
     //CONTINUAR
-    if (decisao("Voce tem certeza que deseja excluir o registro:\n\n1 - SIM\n2 - N�O\n") == 1) {
+    if (decisao("Voce tem certeza que deseja excluir o registro:\n\n1 - SIM\n2 - NÃO\n") == 1) {
         tabelaInscricao[delete-1].codigo = NULL;
         tabelaInscricao[delete-1].matricula = NULL;
         tabelaInscricao[delete-1].codDisciplina = NULL;
@@ -413,7 +370,7 @@ void alterarInscricao(){
     printf("\nData de inscricao: %d\n\n", tabelaInscricao[alt-1].dataInscricao);
 
     //CONTINUAR
-    if (decisao("Voce tem certeza que deseja alterar o registro:\n\n1 - SIM\n2 - N�O\n") == 1) {
+    if (decisao("Voce tem certeza que deseja alterar o registro:\n\n1 - SIM\n2 - NÃO\n") == 1) {
         system("clear");
 		printf("Digite o NOVO CODIGO DA DISCIPLINA do CURSO: \n");
 		scanf("%d", &tabelaInscricao[alt-1].codDisciplina);
@@ -449,11 +406,37 @@ int main() {
         menu = validaMenu(4, 0);
 
         switch(menu) {
-            case 1:
-
-                opcaoAluno(alunos, &numAlunos);
-                break;		
-
+	            case 1:
+	                while (1) {
+	                    system("clear");
+	                    menuSecundario("CADASTRO DE ALUNO");
+	
+	                    int submenu = validaMenu(5, 1);
+	
+	                    if (submenu == 1) {
+	                        system("clear");
+	                        printf("Cadastro de Aluno\n");
+	                        cadastrarAluno(alunos, &numAlunos);
+	                    } else if (submenu == 2) {
+	                        system("clear");
+	                        printf("Listagem de Aluno\n");
+	                        listarAluno(alunos, numAlunos);
+	                    } else if (submenu == 3) {
+	                        system("clear");
+	                        printf("Atualização de Aluno\n");
+	                        atualizarAluno(alunos, numAlunos);
+	                    } else if (submenu == 4) {
+	                        system("clear");
+	                        printf("Exclusão de Aluno\n");
+	                        excluirAluno(alunos, &numAlunos);
+	                    } else if (submenu == 5) {
+	                        // Voltar ao menu principal
+	                        break;
+	                    }
+		                system("clear");
+		            }
+		                break;
+	
 			case 2:
 
 				system("clear");
@@ -488,7 +471,7 @@ int main() {
 						cadastroInscricao();
 
 						//CONTINUAR
-						if (decisao("Deseja retornar ao menu principal?\n\n1 - SIM\n2 - N�O\n") == 1) {
+						if (decisao("Deseja retornar ao menu principal?\n\n1 - SIM\n2 - NÃO\n") == 1) {
 							menu = 5;
 						} else{ menu = 6; }
 						system("clear");
@@ -499,7 +482,7 @@ int main() {
 						imprimirInscricao();
 
 						//CONTINUAR
-						if (decisao("Deseja retornar ao menu principal?\n\n1 - SIM\n2 - N�O\n") == 1) {
+						if (decisao("Deseja retornar ao menu principal?\n\n1 - SIM\n2 - NÃO\n") == 1) {
 							menu = 5;
 						} else{ menu = 6; }
 						system("clear");
@@ -511,7 +494,7 @@ int main() {
 					    system("clear");
 
 					    //CONTINUAR
-						if (decisao("Deseja retornar ao menu principal?\n\n1 - SIM\n2 - N�O\n") == 1) {
+						if (decisao("Deseja retornar ao menu principal?\n\n1 - SIM\n2 - NÃO\n") == 1) {
 							menu = 5;
 						} else{ menu = 6; }
 						system("clear");
@@ -523,7 +506,7 @@ int main() {
 					    system("clear");
 
 					    //CONTINUAR
-						if (decisao("Deseja retornar ao menu principal?\n\n1 - SIM\n2 - N�O\n") == 1) {
+						if (decisao("Deseja retornar ao menu principal?\n\n1 - SIM\n2 - NÃO\n") == 1) {
 							menu = 5;
 						} else{ menu = 6; }
 						system("clear");
@@ -541,10 +524,10 @@ int main() {
 				break;
 
 		}    
-    } while(menu != 0);  // Continua enquanto o usuario não escolher sair
+    } while(menu != 0);  // Continua enquanto o usuario nÃ£o escolher sair
 
     return 0;
 }
 	//SAIR DO PROGRAMA
 	//system("clear");
-	//decisao("ALERTA! Voce irá sair do programa, deseja realmente sair?");
+	//decisao("ALERTA! Voce irÃ¡ sair do programa, deseja realmente sair?");
