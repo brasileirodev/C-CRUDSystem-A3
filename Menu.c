@@ -7,13 +7,6 @@
 #include <string.h>
 #define SIZE 1000
 
-//DECLARACAO DE OBJETOS
-struct inscricaoDisciplina {
-    int matricula;
-    int codDisciplina;
-    int dataInscricao;
-    int codigo;
-};
 
 #define MAX_ALUNOS 100
 #define MAX_MATRICULA 20
@@ -178,6 +171,15 @@ void excluirAluno(struct Aluno alunos[], int *numAlunos) {
 
     printf("Aluno com a matrícula %d não encontrado.\n", matricula);
 }
+
+
+//DECLARACAO DE OBJETOS
+struct inscricaoDisciplina {
+    int matricula;
+    int codDisciplina;
+    int dataInscricao;
+    int codigo;
+};
 
 
 struct disciplina {
