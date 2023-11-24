@@ -13,6 +13,7 @@
 #define MAX_CPF 11 
 #define MAX_NOME 30
 #define MAX_EMAIL 50
+#define MAX_TIPO_CURSOS 100
 
 
 struct Aluno {
@@ -381,6 +382,108 @@ void alterarInscricao(){
 	}
 }
 
+//DECLARAÇÃO DE VARIÁVEIS DO TIPO CURSO
+typedef struct {
+    int codigoTipoCurso ;
+    char nome[50];  
+    char turno[50]; 
+}TipoCurso;
+
+TipoCurso tiposCursos[MAX_TIPO_CURSOS];
+int numTiposCursos = 0;
+
+
+//FUNÇÕES DO TIPOCURSO
+void limparBuffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
+void createTipoCurso() {
+    if (numTiposCursos < MAX_TIPO_CURSOS) {
+        TipoCurso novoTipoCurso;
+
+        printf("\nDigite o nome do curso a ser adicionado: ");
+        fgets(novoTipoCurso.nome, sizeof(novoTipoCurso.nome), stdin);
+        novoTipoCurso.nome[strcspn(novoTipoCurso.nome, "\n")] = '\0'; 
+
+        printf("\nDigite o turno do curso a ser adicionado (manha/noite): ");
+        fgets(novoTipoCurso.turno, sizeof(novoTipoCurso.turno), stdin);
+        novoTipoCurso.turno[strcspn(novoTipoCurso.turno, "\n")] = '\0'; 
+
+        novoTipoCurso.codigoTipoCurso = numTiposCursos + 1;
+        tiposCursos[numTiposCursos] = novoTipoCurso;
+        numTiposCursos++;
+
+        printf("\nCurso criado com sucesso! Retornando ao menu.\n");
+    } else {
+        printf("\nErro: Limite máximo de cursos atingido.\n");
+    }
+}
+
+void readTipoCurso(int codigoTipoCurso) {
+    int encontrado = 0;
+    for (int i = 0; i < numTiposCursos; i++) {
+        if (tiposCursos[i].codigoTipoCurso == codigoTipoCurso) {
+            printf("\nCodigo: %d\n", tiposCursos[i].codigoTipoCurso);
+            printf("Curso: %s\n", tiposCursos[i].nome);
+            printf("Turno: %s\n", tiposCursos[i].turno);
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        printf("\nErro: Curso nao encontrado.\n");
+    }
+}
+
+
+void updateTipoCurso(int codigoTipoCurso) {
+    int encontrado = 0;
+    for (int i = 0; i < numTiposCursos; i++) {
+        if (tiposCursos[i].codigoTipoCurso == codigoTipoCurso) {
+            printf("\nDigite o novo nome do curso: ");
+            fgets(tiposCursos[i].nome, sizeof(tiposCursos[i].nome), stdin);
+            tiposCursos[i].nome[strcspn(tiposCursos[i].nome, "\n")] = '\0';
+
+            printf("\nDigite o novo turno do curso (manha/noite): ");
+            fgets(tiposCursos[i].turno, sizeof(tiposCursos[i].turno), stdin);
+            tiposCursos[i].turno[strcspn(tiposCursos[i].turno, "\n")] = '\0';
+
+            encontrado = 1;
+            printf("\nCurso atualizado com sucesso!\n");
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        printf("\nErro: Curso nao encontrado.\n");
+    }
+}
+
+
+void deleteTipoCurso(int codigoTipoCurso) {
+    int encontrado = 0;
+    for (int i = 0; i < numTiposCursos; i++) {
+        if (tiposCursos[i].codigoTipoCurso == codigoTipoCurso) {
+            for (int j = i; j < numTiposCursos - 1; j++) {
+                tiposCursos[j] = tiposCursos[j + 1];
+            }
+            numTiposCursos--;
+            encontrado = 1;
+            printf("\nCurso removido com sucesso!\n");
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        printf("\nErro: Curso nao encontrado.\n");
+    }
+}//FIM DAS FUNÇÕES DO TIPOCURSO
+
+
+
 //PROGRAMA PRINCIPAL
 int main() {
 
@@ -440,7 +543,7 @@ int main() {
 		                break;
 	
 			case 2:
-
+                               
 				system("clear");
 				menuSecundario("CADASTRO DE CURSO");
 				menu = validaMenu(5,1);
@@ -448,7 +551,7 @@ int main() {
 				//ESCREVA O SEU MENU AQUI
 				
 				system("clear");
-				break;
+                break;
 
 			case 3:
 
