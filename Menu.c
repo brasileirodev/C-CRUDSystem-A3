@@ -184,6 +184,9 @@ struct inscricaoDisciplina {
 
 struct disciplina {
     int codigo;
+    char nome[100];
+    char nomeProfessor [100];
+    int codigoTipoCurso;
 };
 
 struct tipoCurso {
@@ -381,6 +384,144 @@ void alterarInscricao(){
 	}
 }
 
+//---------------------------FUNÇÕES DISCIPLINA (PEDRO)--------------------------------------------
+
+// FUNÇÃO DE PRINT;
+void imprimirDisciplinas(struct disciplina disciplinas[], int quantidadeDisciplinas) {
+    
+    printf("Disciplinas Cadastradas: \n");
+        
+    //LOOP UTILIZADO PARA FAZER O PRINT DE TODAS AS DISCIPLINAS CADASTRADAS;
+    for (int cont = 0; cont < quantidadeDisciplinas; cont++) {    
+        
+        printf("\nCodigo da Disciplina: %03d", disciplinas[cont].codigo);
+        printf("\nNome da Disciplina: %s", disciplinas[cont].nome);
+        printf("\nNome do Professor: %s", disciplinas[cont].nomeProfessor);
+        printf("\nCodigo Tipo Curso: %d", disciplinas[cont].codigoTipoCurso);
+        printf("\n");
+    }
+}   
+    
+
+// FUNÇÃO NOME DISCIPLINA;
+    
+void scanNomeDisciplina(char nome[]) {
+    printf("Informe o nome da disciplina:\n");
+    fgets(nome, 100, stdin);
+    nome[strcspn(nome, "\n")] = 0;
+}
+
+// FUNÇÃO NOME PROFESSOR;
+
+void scanNomeProfessor(char nomeProfessor[]) {
+    printf("Informe o nome do Professor:\n");
+    fgets(nomeProfessor, 100, stdin);
+    nomeProfessor[strcspn(nomeProfessor, "\n")] = 0;
+    
+}
+
+// FUNÇÃO ALTERAR DISCIPLINAS;
+void alterarDisciplina(struct disciplina disciplinas[], int quantidadeDisciplinas) {
+    // SOLICITANDO CÓDIGO A SER ALTERADO
+    int altDisciplina = 0;
+    system("clear");
+    printf("Digite o codigo da disciplina que você deseja alterar: \n");
+    scanf("%d", &altDisciplina);
+
+    // PRINT DAS INFORMAÇÕES DA DISCIPLINA DE CÓDIGO ESCOLHIDO
+    system("clear");
+    printf("Codigo: %03d", disciplinas[altDisciplina - 1].codigo);
+    printf("\nNome da Disciplina: %s", disciplinas[altDisciplina - 1].nome);
+    printf("\nNome do Professor: %s", disciplinas[altDisciplina - 1].nomeProfessor);
+    printf("\nCodigo tipo curso: %d", disciplinas[altDisciplina - 1].codigoTipoCurso);
+
+    //VERIFICADOR DE CODIGO
+    if (altDisciplina > 0 && altDisciplina <= quantidadeDisciplinas) {
+       
+        // VERIFICADOR
+        int codVerificador = 1;
+        printf("\n\nVoce realmente deseja fazer a alteraçao \n\n1 - SIM\n2 - NAO\n");
+        scanf("%d", &codVerificador);
+        getchar();
+        // ALTERANDO OS VALORES DAS DISCIPLINAS(SEM ALTERAR O CÓDIGO)
+        if (codVerificador == 1) {
+            
+            system("clear");
+            printf("Digite o novo nome da disciplina: \n");
+            fgets(disciplinas[altDisciplina - 1].nome, sizeof(disciplinas[altDisciplina - 1].nome), stdin);
+            disciplinas[altDisciplina - 1].nome[strcspn(disciplinas[altDisciplina - 1].nome, "\n")] = 0;
+    
+            system("clear");
+            printf("Digite o novo nome do professor: \n");
+            fgets(disciplinas[altDisciplina - 1].nomeProfessor, sizeof(disciplinas[altDisciplina - 1].nomeProfessor), stdin);
+            disciplinas[altDisciplina - 1].nomeProfessor[strcspn(disciplinas[altDisciplina - 1].nomeProfessor, "\n")] = 0;
+            
+            system("clear");
+            printf("Disciplina alterada\n");
+            
+        } else {
+            system("clear");
+            printf("\nOperacao Cancelada\n");
+        }
+            
+    }else {
+    system("clear");
+    printf("\nCodigo de disciplina nao existente\n");
+    }
+}
+
+
+int deletarDisciplina(struct disciplina disciplinas[], int quantidadeDisciplinas) {
+   
+   
+    // SOLICITANDO CÓDIGO A SER EXCLUIDO
+    int delDisciplina = 0;
+    system("clear");
+    printf("Digite o codigo da disciplina que voce deseja excluir:\n");
+    scanf("%d", &delDisciplina);
+    
+    
+     // PRINT DAS INFORMAÇÕES DA DISCIPLINA DE CÓDIGO ESCOLHIDO
+    system("clear");
+    printf("Codigo: %03d", disciplinas[delDisciplina - 1].codigo);
+    printf("\nNome da Disciplina: %s", disciplinas[delDisciplina - 1].nome);
+    printf("\nNome do Professor: %s", disciplinas[delDisciplina - 1].nomeProfessor);
+    printf("\nCodigo tipo curso: %d", disciplinas[delDisciplina - 1].codigoTipoCurso);
+
+    // VERIFICADOR DE CODIGO (EM TESTE)
+    if (delDisciplina > 0 && delDisciplina <= quantidadeDisciplinas) {
+        
+        // VERIFICADOR
+        int codVerificador = 0;
+        printf("\n\nVocê realmente deseja excluir?\n1 - SIM\n2 - NAO\n");
+        scanf("%d", &codVerificador);
+        getchar();
+            
+        //EXCLUINDO 
+        if (codVerificador == 1) {
+            
+            disciplinas[delDisciplina - 1].codigo = NULL;
+            disciplinas[delDisciplina - 1].nome[0] = '\0';
+            disciplinas[delDisciplina - 1].nomeProfessor[0] = '\0';
+            disciplinas[delDisciplina - 1].codigoTipoCurso = NULL;
+            system("clear");
+            printf("Disciplina excluida\n");
+            return quantidadeDisciplinas; // Retorna a nova quantidade de disciplinas
+        } else {
+            
+            system("clear");
+            printf("\nOperacao Cancelada\n");
+        }
+    } else {
+        system("clear");
+        printf("\nCodigo de disciplina nao existente\n");
+    }
+    return quantidadeDisciplinas; // Retorna a quantidade original de disciplinas
+}
+
+//---------------------------FIM FUNÇÕES DISCIPLINA (PEDRO)------------------------------------------------
+
+
 //PROGRAMA PRINCIPAL
 int main() {
 
@@ -388,6 +529,19 @@ int main() {
     struct Aluno alunos[MAX_ALUNOS];
     int numAlunos = 0;
     int menu;
+
+    // ---------------VARIÁVEIS DICIPLINA(PEDRO)----------------------
+    // DEFININDO ARRAY DISCIPLINAS UTILIZANDO O "SIZE" PARA DEFINIR UM MÁXIMO DE DISCIPLINAS;
+    struct disciplina disciplinas[SIZE];
+    // VARIÁVEL PARA CONTABILIZAR QUANTIDADE DE DISCIPLINAS;
+    int quantidadeDisciplinas = 0;
+    // DEFINIR VARIAVEL "STRUCT" PARA NOVA DISCIPLINA;
+    struct disciplina novaDisciplina;
+    // variavel do alt
+    int altDisc = 0;
+    int codver = 1;
+    //---------------------------------------------------------------
+
 
     do {
         printf(" _________________________________________________________________________________________\n");
@@ -451,12 +605,110 @@ int main() {
 				break;
 
 			case 3:
-
+            do{
 				system("clear");
 				menuSecundario("CADASTRO DE DISCIPLINA");
 				menu = validaMenu(5,1);
 
-				//ESCREVA O SEU MENU AQUI
+				if(menu == 1){
+							system("clear");
+						
+                             
+                                //---------------------------- LOOP PARA SOLICITAÇÃO DE INCLUSÕES --------------------------
+                                
+                                // VARIÁVEL PARA CONTROLAR LOOP WHILE;
+                                
+                                int loop = 1;
+                               
+                                while  (loop == 1) {
+                                
+                                
+                                    //---------------- VERIFICADOR DE SIZE (QUANTIDADE MAXIMA DE DISCIPLINAS) ---------------
+                                   
+                                    if (quantidadeDisciplinas < SIZE){
+                                        
+                                    
+                                    // CONTADOR DE CÓDIGO DE DISCIPLINA (AUTO INCREMENT);
+                                        novaDisciplina.codigo = quantidadeDisciplinas + 1;
+                                    
+                                    // VALOR ESTRANGEIRO, CÓDIGO TIPO CURSO MARTELADO;
+                                        novaDisciplina.codigoTipoCurso = 1;
+                            
+                                   
+                                    //------------------------ SOLICITAÇÕES DAS DISCIPLINAS------------------------------- 
+                                        getchar();
+                                        system("clear");
+                                        scanNomeDisciplina(novaDisciplina.nome);
+                            
+                                        system("clear");
+                                        scanNomeProfessor(novaDisciplina.nomeProfessor);
+                            
+                                    //------------------------------------------------------------------------------------
+                                        
+                                        
+                                        // INCLUSOR DE DISCIPLINAS NO ARRAY;
+                                       
+                                        disciplinas[quantidadeDisciplinas] = novaDisciplina;
+                                        quantidadeDisciplinas++;
+			
+			                system("clear");
+								//CONTINUAR
+								if (decisao("Deseja incluir outra disciplinas?\n\n1 - SIM\n2 - NAO\n") == 2) {
+									break;
+								}
+								system("clear");
+                                    } else {
+                                    system("clear"); 
+                                    printf ("Nao e possivel adicionar mais disciplinas");
+                                    
+                                     break;
+                                     }
+								
+							}
+							menu = 6;
+						}
+						//PRINT DOS REGISTROS
+						if(menu == 2){
+							system("clear");
+							imprimirDisciplinas(disciplinas, quantidadeDisciplinas);
+							
+							//CONTINUAR
+							if (decisao("\nDeseja retornar ao menu principal?\n\n1 - SIM\n2 - NAO\n") == 1) {
+								menu = 5;
+							} else{ menu = 6; }
+							system("clear");
+						}
+						// ALTERAR REGISTROS	
+						if(menu == 3){
+						    system("clear");
+						    alterarDisciplina(disciplinas, quantidadeDisciplinas);
+						    
+						    //CONTINUAR
+							if (decisao("\nDeseja retornar ao menu principal?\n\n1 - SIM\n2 - NAO\n") == 1) {
+								menu = 5;
+							} else{ menu = 6; }
+							system("clear");
+						}
+						// DELETAR REGISTROS	
+						if(menu == 4){
+						    
+						    system("clear");
+						    deletarDisciplina(disciplinas, quantidadeDisciplinas);
+						    
+						    //CONTINUAR
+							if (decisao("\nDeseja retornar ao menu principal?\n\n1 - SIM\n2 - NAO\n") == 1) {
+								menu = 5;
+							} else{ menu = 6; }
+							system("clear");
+						    
+						}
+						
+						
+					}while(menu == 6); //MENU IGUAL A 6 VOLTA PARA O MESMO MENU, PORÉM IGUAL 5 RETORNA PARA O PRINCIPAL
+					break;
+					
+					system("clear");
+					break;
 
 				system("clear");
 				break;
