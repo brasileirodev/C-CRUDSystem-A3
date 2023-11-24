@@ -413,25 +413,25 @@ int main() {
 	                    system("clear");
 	                    menuSecundario("CADASTRO DE ALUNO");
 	
-	                    int submenu = validaMenu(5, 1);
+	                    int menu = validaMenu(5, 1);
 	
-	                    if (submenu == 1) {
+	                    if (menu == 1) {
 	                        system("clear");
 	                        printf("Cadastro de Aluno\n");
 	                        cadastrarAluno(alunos, &numAlunos);
-	                    } else if (submenu == 2) {
+	                    } else if (menu == 2) {
 	                        system("clear");
 	                        printf("Listagem de Aluno\n");
 	                        listarAluno(alunos, numAlunos);
-	                    } else if (submenu == 3) {
+	                    } else if (menu == 3) {
 	                        system("clear");
 	                        printf("Atualizacao de Aluno\n");
 	                        atualizarAluno(alunos, numAlunos);
-	                    } else if (submenu == 4) {
+	                    } else if (menu == 4) {
 	                        system("clear");
 	                        printf("Exclusao de Aluno\n");
 	                        excluirAluno(alunos, &numAlunos);
-	                    } else if (submenu == 5) {
+	                    } else if (menu == 5) {
 	                        // Voltar ao menu principal
 	                        break;
 	                    }
