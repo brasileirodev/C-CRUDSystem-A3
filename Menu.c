@@ -1,6 +1,7 @@
-//@HÉCTOR VALENTE (22/11/2023) - Menu e implementação da usabilidade inscrição de disciplina.
+//@H�CTOR VALENTE (22/11/2023) - Menu e implementação da usabilidade inscrição de disciplina.
 //@LUCAS (23/11/2023) - Menu e implementação da usabilidade cadastro de aluno.
-//@HÉCTOR VALENTE (23/11/2023) - Correção caracter especial + função inclusão em método
+//@H�CTOR VALENTE (23/11/2023) - Correção caracter especial + função inclusão em método.
+//@H�CTOR VALENTE (25/11/2023) - Fun��o validar matricula + nova fun��o alterar.
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,6 +15,24 @@
 #define MAX_NOME 30
 #define MAX_EMAIL 50
 
+//DECLARACAO DE OBJETOS
+struct inscricaoDisciplina {
+    int matricula;
+    int codDisciplina;
+    int dataInscricao;
+    int codigo;
+};
+
+struct disciplina {
+    int codigo;
+    char nome[100];
+    char nomeProfessor [100];
+    int codigoTipoCurso;
+};
+
+struct tipoCurso {
+    int codigo;
+};
 
 struct Aluno {
     int matricula;
@@ -24,6 +43,13 @@ struct Aluno {
     int codigoTipoCurso;
 };
 
+//DECLARACAO DE VARIAVEIS GLOBAIS
+struct inscricaoDisciplina tabelaInscricao[SIZE]; //ARRAY
+struct disciplina tabelaDisciplina[SIZE]; //ARRAY
+struct tipoCurso tabelaCurso[SIZE]; //ARRAY
+//struct alunos tabelaAluno[SIZE]; Lucas o seu ARRAY GLOBAL AQUI
+
+//------------------------------------------------------------FUNCOES ALUNO (LUCAS)------------------------------------------------------------
 void imprimirAluno(struct Aluno aluno) {
     printf("Matrícula: %d\n", aluno.matricula);
     printf("CPF: %s\n", aluno.cpf);
@@ -173,38 +199,14 @@ void excluirAluno(struct Aluno alunos[], int *numAlunos) {
 }
 
 
-//DECLARACAO DE OBJETOS
-struct inscricaoDisciplina {
-    int matricula;
-    int codDisciplina;
-    int dataInscricao;
-    int codigo;
-};
-
-
-struct disciplina {
-    int codigo;
-    char nome[100];
-    char nomeProfessor [100];
-    int codigoTipoCurso;
-};
-
-struct tipoCurso {
-    int codigo;
-};
-
-//DECLARACAO DE VARIAVEIS GLOBAIS
-struct inscricaoDisciplina tabelaInscricao[SIZE]; //ARRAY
-struct disciplina tabelaDisciplina[SIZE]; //ARRAY
-struct tipoCurso tabelaCurso[SIZE]; //ARRAY
-
-//METODO NEGRITO - Coloca um texto em negrito. Utilize bold(1) para iniciar e bold(0) para finalizar
+//----------------------------------------------------FUNCOES INSCRICOES & MENU (HECTOR)-----------------------------------------------------
+//FUNCAO NEGRITO - Coloca um texto em negrito. Utilize bold(1) para iniciar e bold(0) para finalizar
 void bold(int status) {
 	static const char *seq[] = {"\x1b[0m", "\x1b[1m"};
 	printf("%s", seq[!!status]);
 }
 
-//METODO TELA DO MENU SECUNDARIO - Padronizacao de menu. Recebe um CHAR com o nome do menu selecionado
+//FUNCAO TELA DO MENU SECUNDARIO - Padronizacao de menu. Recebe um CHAR com o nome do menu selecionado
 void menuSecundario(char texto[100]){
 
     int controle;
@@ -235,7 +237,7 @@ void menuSecundario(char texto[100]){
 	printf("|_________________________________________________________________________________________|\n");
 }
 
-//METODO VALIDA MENU - Tem como objetivo receber dois INT re range do menu
+//FUNCAO VALIDA MENU - Tem como objetivo receber dois INT re range do menu
 int validaMenu(int maior, int menor){
     int menu;
     scanf("%d", &menu);
@@ -246,7 +248,7 @@ int validaMenu(int maior, int menor){
 	return menu;
 }
 
-//METODO DECISAO - Tem como objetivo receber um CHAR para imprimir na tela e perguntar ao usuario se ele deseja continuar
+//FUNCAO DECISAO - Tem como objetivo receber um CHAR para imprimir na tela e perguntar ao usuario se ele deseja continuar
 int decisao(char texto[200]){
 
     int decisao;
@@ -263,7 +265,7 @@ int decisao(char texto[200]){
     system("clear");
 }
 
-//METODO DE AUTOINCREMENT - RECEBER UM CHAR PARA ESCOLHER EM QUAL TABELA IRAO REALIZAR O AUTOINCREMENT
+//FUNCAO DE AUTOINCREMENT - RECEBER UM CHAR PARA ESCOLHER EM QUAL TABELA IRAO REALIZAR O AUTOINCREMENT
 int autoincrement(char texto[50]){
 
     int increment;
@@ -295,51 +297,126 @@ int autoincrement(char texto[50]){
     return(increment);
 }
 
-//METODO VALIDAÇÃO CADASTRO MATRICULA - Metodo tem como objetivo garantir que não existe duplicidade na matricula
+//FUNCAO VALIDACAO CADASTRO MATRICULA - Metodo tem como objetivo garantir o usuario escolheu uma matricula j� existente
+/*int validaMatricula(int matricula){
+    for(int i = 0; i < SIZE; i++){
+        if(alunos[i].matricula == matricula){
+            matricula = NULL;
+            break;
+        }
+    }
+    return(matricula);
+}*/
 
-
-
-//METODO INCLUIR INSCRICAO DE DISCIPLINA - Metodo utilizado para incluir uma nova INSCRICAO DE DISCIPLINA
+//FUNCAO INCLUIR INSCRICAO DE DISCIPLINA - Metodo utilizado para incluir uma nova INSCRICAO DE DISCIPLINA
 void cadastroInscricao(){
+
+    int vMatricula; //VARIAVEL DE MEMORIA LOCAL
+    int vCodDisciplina; //VARIAVEL DE MEMORIA LOCAL
 
     for(int i = autoincrement("INSCRICAO DE DISCIPLINA") - 1; i < SIZE; i ++){
 
+        //ERRO_MAT_S:
 	    system("clear");
 
 	    printf("Digite a MATRICULA do aluno: \n");
+	    /*scanf("%d", &vMatricula);
+        if(validaMatricula(vMatricula) == NULL){
+            system("clear");
+            if(decisao("MATRICULA j� existente, deseja digitar outra MATRICULA?\n\n1 - SIM\n2 - N�O\n") == 1){
+                goto ERRO_MAT_S;
+            } else{ 
+                goto ERRO_MAT_N;
+            }
+        }else{
+            tabelaInscricao[i].matricula = vMatricula;
+        }*/
 		scanf("%d", &tabelaInscricao[i].matricula);
 
 		printf("Digite o CODIGO DA DISCIPLINA do CURSO: \n");
 		scanf("%d", &tabelaInscricao[i].codDisciplina);
 
-		printf("Digite a DATA DE INSCRICAO (DDMMAAAA): \n\n");
+		printf("Digite a DATA DE INSCRICAO (DDMMAAAA): \n");
 		scanf("%d", &tabelaInscricao[i].dataInscricao);
 
-		tabelaInscricao[i].codigo = autoincrement("INSCRICAO DE DISCIPLINA");
+		//tabelaInscricao[i].codigo = autoincrement("INSCRICAO DE DISCIPLINA");
 		system("clear");
 
+        //ERRO_MAT_N:
 		//CONTINUAR
-		if (decisao("Deseja continuar incluindo matricula?\n\n1 - SIM\n2 - NÃO\n") == 2) {
-			break;
+		if (decisao("Deseja incluir outra inscricao?\n\n1 - SIM\n2 - N�O\n") == 2) {
 			system("clear");
+			break;
 		}
 	}
 }
 
-//METODO IMPRIMIR INSCRICAO DISCIPLINA - Metodo utilizado para imprimir todas as INSCRICOES DE DISCIPLINAS feitas
+//FUNCAO IMPRIMIR INSCRICAO DISCIPLINA - Metodo utilizado para imprimir todas as INSCRICOES DE DISCIPLINAS feitas
 void imprimirInscricao(){
-    //char decisao[1];
+
     for(int i = 0; i < SIZE; i++) {
-        if (tabelaInscricao[i].codigo != 0) {
-            printf("Codigo: %d", tabelaInscricao[i].codigo);
-            printf("\nMatricula: %d", tabelaInscricao[i].matricula);
+        if (tabelaInscricao[i].matricula != 0) {
+            //printf("Codigo: %d", tabelaInscricao[i].codigo);
+            printf("Matricula: %d", tabelaInscricao[i].matricula);
             printf("\nCod. Disciplina: %d", tabelaInscricao[i].codDisciplina);
             printf("\nData de inscricao: %d\n\n", tabelaInscricao[i].dataInscricao);
         } 
     }
 }
 
-//METODO DELETAR INSCRICAO DE DISCIPLINA - Metodo utilizado para deletar registro de INSCRICAO DE DISCIPLINA
+void altInscicao(){
+    
+    int vMatricula, vCodigo, cont = 1;// VARIAVEL LOCAL
+    
+    printf("Digite a matricula que voc� deseja alterar alguma inscricao: \n");
+    scanf("%d", &vMatricula);
+    
+    inicio_loop:
+    system("clear");
+    for (int i = 0; i < SIZE ; i ++){ //FOR PARA LISTAR TODAS AS INCRICOES DE UMA MATRICULA SELECIONADA
+        tabelaInscricao[i].codigo = 0;
+        if(tabelaInscricao[i].matricula == vMatricula){
+                tabelaInscricao[i].codigo = cont;
+                cont ++;
+                printf("Codigo: %d", tabelaInscricao[i].codigo);
+                printf("\nMatricula: %d", tabelaInscricao[i].matricula);
+                printf("\nCod. Disciplina: %d", tabelaInscricao[i].codDisciplina);
+                printf("\nData de inscricao: %d\n\n", tabelaInscricao[i].dataInscricao);
+        }
+    }
+    printf("Digite o codigo de inscricao que voc� deseja alterar: \n");
+    scanf("%d", &vCodigo);
+    system("clear");
+    for (int i = 0; i < SIZE ; i ++){ //FOR PARA MOSTRAR A INSCRICAO SELECIONADA
+        if(tabelaInscricao[i].codigo == vCodigo){
+            printf("Matricula: %d", tabelaInscricao[i].matricula);
+            printf("\nCod. Disciplina: %d", tabelaInscricao[i].codDisciplina);
+            printf("\nData de inscricao: %d\n\n", tabelaInscricao[i].dataInscricao);
+            
+            if (decisao("Voce tem certeza que deseja alterar o registro:\n\n1 - SIM\n2 - N�O\n") == 1){ //CERTEZA QUE DESEJA EXCLUIR?
+                system("clear");
+	         printf("Digite um o NOVO CODIGO DA DISCIPLINA do CURSO: \n"); //NOVOS DADOS
+	         scanf("%d", &tabelaInscricao[i].codDisciplina);
+	         printf("Digite uma NOVA DATA DE INSCRICAO (DDMMAAAA): \n"); //NOVOS DADOS
+	         scanf("%d", &tabelaInscricao[i].dataInscricao);
+	         break;
+            }
+        }else{
+            if(i == 999){ //ELSE PARA INFORMAR QUE O CODIGO N�O FOI LOCALIZADO
+                system("clear");
+                printf("ALERTA: CODIGO NAO LOCALIZADO.\n\n");
+                if (decisao("Deseja tentar alterar novamente:\n\n1 - SIM\n2 - N�O\n") == 1){//DESEJA TENTAR NOVAMENTE?
+                    goto inicio_loop;
+                }else{
+                    goto fim_loop;
+                }
+            }
+        }
+    }
+    fim_loop:
+}
+
+//FUNCAO DELETAR INSCRICAO DE DISCIPLINA - Metodo utilizado para deletar registro de INSCRICAO DE DISCIPLINA
 void deletarInscricao(){
 
     int delete;
@@ -361,7 +438,7 @@ void deletarInscricao(){
 	}
 }
 
-//METODO ALTERAR INSCRICAO DE DISCIPLINA - Metodo utilizado para alterar registro de INSCRICAO DE DISCIPLINA
+//FUNCAO ALTERAR INSCRICAO DE DISCIPLINA - Metodo utilizado para alterar registro de INSCRICAO DE DISCIPLINA
 void alterarInscricao(){
 
     int alt;
@@ -384,7 +461,7 @@ void alterarInscricao(){
 	}
 }
 
-//---------------------------FUNÇÕES DISCIPLINA (PEDRO)--------------------------------------------
+//--------------------------------------------------FUNCOES DISCIPLINA (PEDRO)-------------------------------------------------------------
 
 // FUNÇÃO DE PRINT;
 void imprimirDisciplinas(struct disciplina disciplinas[], int quantidadeDisciplinas) {
@@ -519,10 +596,7 @@ int deletarDisciplina(struct disciplina disciplinas[], int quantidadeDisciplinas
     return quantidadeDisciplinas; // Retorna a quantidade original de disciplinas
 }
 
-//---------------------------FIM FUNÇÕES DISCIPLINA (PEDRO)------------------------------------------------
-
-
-//PROGRAMA PRINCIPAL
+//-----------------------------------------------------------INICIO MAIN--------------------------------------------------------------------
 int main() {
 
     system("clear");
@@ -530,10 +604,10 @@ int main() {
     int numAlunos = 0;
     int menu;
 
-    // ---------------VARIÁVEIS DICIPLINA(PEDRO)----------------------
-    // DEFININDO ARRAY DISCIPLINAS UTILIZANDO O "SIZE" PARA DEFINIR UM MÁXIMO DE DISCIPLINAS;
+    // ---------------VARIÝVEIS DICIPLINA(PEDRO)----------------------
+    // DEFININDO ARRAY DISCIPLINAS UTILIZANDO O "SIZE" PARA DEFINIR UM MÝXIMO DE DISCIPLINAS;
     struct disciplina disciplinas[SIZE];
-    // VARIÁVEL PARA CONTABILIZAR QUANTIDADE DE DISCIPLINAS;
+    // VARIÝVEL PARA CONTABILIZAR QUANTIDADE DE DISCIPLINAS;
     int quantidadeDisciplinas = 0;
     // DEFINIR VARIAVEL "STRUCT" PARA NOVA DISCIPLINA;
     struct disciplina novaDisciplina;
@@ -616,7 +690,7 @@ int main() {
                              
                                 //---------------------------- LOOP PARA SOLICITAÇÃO DE INCLUSÕES --------------------------
                                 
-                                // VARIÁVEL PARA CONTROLAR LOOP WHILE;
+                                // VARIÝVEL PARA CONTROLAR LOOP WHILE;
                                 
                                 int loop = 1;
                                
@@ -725,7 +799,7 @@ int main() {
 						cadastroInscricao();
 
 						//CONTINUAR
-						if (decisao("Deseja retornar ao menu principal?\n\n1 - SIM\n2 - NÃO\n") == 1) {
+						if (decisao("Deseja retornar ao menu principal?\n\n1 - SIM\n2 - N�O\n") == 1) {
 							menu = 5;
 						} else{ menu = 6; }
 						system("clear");
@@ -736,7 +810,7 @@ int main() {
 						imprimirInscricao();
 
 						//CONTINUAR
-						if (decisao("Deseja retornar ao menu principal?\n\n1 - SIM\n2 - NÃO\n") == 1) {
+						if (decisao("Deseja retornar ao menu principal?\n\n1 - SIM\n2 - N�O\n") == 1) {
 							menu = 5;
 						} else{ menu = 6; }
 						system("clear");
@@ -744,11 +818,12 @@ int main() {
 
 					if(menu == 3){
 					    system("clear");
-					    alterarInscricao();
+					    altInscicao();
+					    //alterarInscricao();
 					    system("clear");
 
 					    //CONTINUAR
-						if (decisao("Deseja retornar ao menu principal?\n\n1 - SIM\n2 - NÃO\n") == 1) {
+						if (decisao("Deseja retornar ao menu principal?\n\n1 - SIM\n2 - N�O\n") == 1) {
 							menu = 5;
 						} else{ menu = 6; }
 						system("clear");
@@ -760,7 +835,7 @@ int main() {
 					    system("clear");
 
 					    //CONTINUAR
-						if (decisao("Deseja retornar ao menu principal?\n\n1 - SIM\n2 - NÃO\n") == 1) {
+						if (decisao("Deseja retornar ao menu principal?\n\n1 - SIM\n2 - N�O\n") == 1) {
 							menu = 5;
 						} else{ menu = 6; }
 						system("clear");
