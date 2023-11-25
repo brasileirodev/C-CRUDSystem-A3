@@ -1,7 +1,7 @@
 //@H…CTOR VALENTE (22/11/2023) - Menu e implementa√ß√£o da usabilidade inscri√ß√£o de disciplina.
 //@LUCAS (23/11/2023) - Menu e implementa√ß√£o da usabilidade cadastro de aluno.
 //@H…CTOR VALENTE (23/11/2023) - Corre√ß√£o caracter especial + fun√ß√£o inclus√£o em m√©todo.
-//@H…CTOR VALENTE (25/11/2023) - FunÁ„o validar matricula + nova funÁ„o alterar.
+//@H…CTOR VALENTE (25/11/2023) - FunÁ„o validar matricula + nova funÁ„o alterar/deletar.
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -364,11 +364,12 @@ void imprimirInscricao(){
     }
 }
 
-void altInscicao(){
+//FUNCAO ALTERAR INSCRICAO DE DISCIPLINA - Funcao utilizada para alterar registro de INSCRICAO DE DISCIPLINA
+void altInscricao(){
     
     int vMatricula, vCodigo, cont = 1;// VARIAVEL LOCAL
     
-    printf("Digite a matricula que vocÍ deseja alterar alguma inscricao: \n");
+    printf("Digite a matricula que vocÍ deseja alterar uma inscricao: \n");
     scanf("%d", &vMatricula);
     
     inicio_loop:
@@ -416,49 +417,57 @@ void altInscicao(){
     fim_loop:
 }
 
-//FUNCAO DELETAR INSCRICAO DE DISCIPLINA - Metodo utilizado para deletar registro de INSCRICAO DE DISCIPLINA
-void deletarInscricao(){
+//FUNCAO DELETAR INSCRICAO DE DISCIPLINA - Funcao utilizada para deletar registro de INSCRICAO DE DISCIPLINA
+void delInscricao(){
 
-    int delete;
-    printf("Digite o Codigo de inscricao de disciplina que voce deseja deletar: \n");
-    scanf("%d", &delete);
-
+    int vMatricula, vCodigo, cont = 1;// VARIAVEL LOCAL
+    
+    printf("Digite a matricula que vocÍ deseja deletar uma inscricao: \n");
+    scanf("%d", &vMatricula);
+    
+    inicio_loop:
     system("clear");
-	printf("Codigo: %d", tabelaInscricao[delete-1].codigo);
-    printf("\nMatricula: %d", tabelaInscricao[delete-1].matricula);
-    printf("\nCod. Disciplina: %d", tabelaInscricao[delete-1].codDisciplina);
-    printf("\nData de inscricao: %d\n\n", tabelaInscricao[delete-1].dataInscricao);
-
-    //CONTINUAR
-    if (decisao("Voce tem certeza que deseja excluir o registro:\n\n1 - SIM\n2 - N√ÉO\n") == 1) {
-        tabelaInscricao[delete-1].codigo = NULL;
-        tabelaInscricao[delete-1].matricula = NULL;
-        tabelaInscricao[delete-1].codDisciplina = NULL;
-        tabelaInscricao[delete-1].dataInscricao = NULL;
-	}
-}
-
-//FUNCAO ALTERAR INSCRICAO DE DISCIPLINA - Metodo utilizado para alterar registro de INSCRICAO DE DISCIPLINA
-void alterarInscricao(){
-
-    int alt;
-    printf("Digite o Codigo de inscricao de disciplina que voce deseja deletar: \n");
-    scanf("%d", &alt);
-
+    for (int i = 0; i < SIZE ; i ++){ //FOR PARA LISTAR TODAS AS INCRICOES DE UMA MATRICULA SELECIONADA
+        tabelaInscricao[i].codigo = 0;
+        if(tabelaInscricao[i].matricula == vMatricula){
+                tabelaInscricao[i].codigo = cont;
+                cont ++;
+                printf("Codigo: %d", tabelaInscricao[i].codigo);
+                printf("\nMatricula: %d", tabelaInscricao[i].matricula);
+                printf("\nCod. Disciplina: %d", tabelaInscricao[i].codDisciplina);
+                printf("\nData de inscricao: %d\n\n", tabelaInscricao[i].dataInscricao);
+        }
+    }
+    printf("Digite o codigo de inscricao que vocÍ deseja deletar: \n");
+    scanf("%d", &vCodigo);
     system("clear");
-	printf("Codigo: %d", tabelaInscricao[alt-1].codigo);
-    printf("\nMatricula: %d", tabelaInscricao[alt-1].matricula);
-    printf("\nCod. Disciplina: %d", tabelaInscricao[alt-1].codDisciplina);
-    printf("\nData de inscricao: %d\n\n", tabelaInscricao[alt-1].dataInscricao);
-
-    //CONTINUAR
-    if (decisao("Voce tem certeza que deseja alterar o registro:\n\n1 - SIM\n2 - N√ÉO\n") == 1) {
-        system("clear");
-		printf("Digite o NOVO CODIGO DA DISCIPLINA do CURSO: \n");
-		scanf("%d", &tabelaInscricao[alt-1].codDisciplina);
-		printf("Digite a NOVA DATA DE INSCRICAO (DDMMAAAA): \n");
-		scanf("%d", &tabelaInscricao[alt-1].dataInscricao);
-	}
+    for (int i = 0; i < SIZE ; i ++){ //FOR PARA MOSTRAR A INSCRICAO SELECIONADA
+        if(tabelaInscricao[i].codigo == vCodigo){
+            printf("Matricula: %d", tabelaInscricao[i].matricula);
+            printf("\nCod. Disciplina: %d", tabelaInscricao[i].codDisciplina);
+            printf("\nData de inscricao: %d\n\n", tabelaInscricao[i].dataInscricao);
+            
+            if (decisao("Voce tem certeza que deseja deletar o registro:\n\n1 - SIM\n2 - N√O\n") == 1){ //CERTEZA QUE DESEJA EXCLUIR?
+                system("clear");
+                tabelaInscricao[i].codigo = NULL;
+                tabelaInscricao[i].matricula = NULL;
+                tabelaInscricao[i].codDisciplina = NULL;
+                tabelaInscricao[i].dataInscricao = NULL;
+	            break;
+            }
+        }else{
+            if(i == 999){ //ELSE PARA INFORMAR QUE O CODIGO N√O FOI LOCALIZADO
+                system("clear");
+                printf("ALERTA: CODIGO NAO LOCALIZADO.\n\n");
+                if (decisao("Deseja tentar deletar novamente:\n\n1 - SIM\n2 - N√O\n") == 1){//DESEJA TENTAR NOVAMENTE?
+                    goto inicio_loop;
+                }else{
+                    goto fim_loop;
+                }
+            }
+        }
+    }
+    fim_loop:
 }
 
 //--------------------------------------------------FUNCOES DISCIPLINA (PEDRO)-------------------------------------------------------------
@@ -796,7 +805,7 @@ int main() {
 				    menuSecundario("INSCRICAO DE DISCIPLINA");
 					menu = validaMenu(5,1);
 
-					if(menu == 1){
+					if(menu == 1){ //INCLUIR------------------------
 						system("clear");
 						cadastroInscricao();
 
@@ -807,7 +816,7 @@ int main() {
 						system("clear");
 					}
 
-					if(menu == 2){
+					if(menu == 2){//IMPRIMIR-----------------------
 						system("clear");
 						imprimirInscricao();
 
@@ -818,9 +827,9 @@ int main() {
 						system("clear");
 					}
 
-					if(menu == 3){
+					if(menu == 3){//ALTERAR------------------------
 					    system("clear");
-					    altInscicao();
+					    altInscricao();
 					    //alterarInscricao();
 					    system("clear");
 
@@ -831,9 +840,10 @@ int main() {
 						system("clear");
 					}
 
-					if(menu == 4){
+					if(menu == 4){//EXCLUIR------------------------
 					    system("clear");
-					    deletarInscricao();
+					    delInscricao();
+                        //deletarInscricao();
 					    system("clear");
 
 					    //CONTINUAR
