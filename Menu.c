@@ -661,6 +661,7 @@ int main() {
 	                        excluirAluno(alunos, &numAlunos);
 	                    } else if (menu == 5) {
 	                        // Voltar ao menu principal
+                            system("clear");
 	                        break;
 	                    }
 		                system("clear");
@@ -777,6 +778,7 @@ int main() {
 						    
 						}
 						
+                        system("clear");
 						
 					}while(menu == 6); //MENU IGUAL A 6 VOLTA PARA O MESMO MENU, PORÉM IGUAL 5 RETORNA PARA O PRINCIPAL
 					break;
