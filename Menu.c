@@ -2,8 +2,9 @@
 //@LUCAS (23/11/2023) - Menu e implementação da usabilidade cadastro de aluno.
 //@H�CTOR VALENTE (23/11/2023) - Correção caracter especial + função inclusão em método.
 //@H�CTOR VALENTE (25/11/2023) - Fun��o validar matricula + nova fun��o alterar/deletar.
+//Pedro Soares (26/11/2023) - Correção de caracter especial.
 
-#include <stdio.h>
+#include <stdio.h/>
 #include <stdlib.h>
 #include <string.h>
 #define SIZE 1000
@@ -26,8 +27,8 @@ struct inscricaoDisciplina {
 
 struct disciplina {
     int codigo;
-    char nome[100];
-    char nomeProfessor [100];
+    char nome[SIZE];
+    char nomeProfessor [SIZE];
     int codigoTipoCurso;
 };
 
@@ -473,7 +474,7 @@ void delInscricao(){
 
 //--------------------------------------------------FUNCOES DISCIPLINA (PEDRO)-------------------------------------------------------------
 
-// FUNÇÃO DE PRINT;
+// FUNCAO DE PRINT;
 void imprimirDisciplinas(struct disciplina disciplinas[], int quantidadeDisciplinas) {
     
     printf("Disciplinas Cadastradas: \n");
@@ -490,32 +491,32 @@ void imprimirDisciplinas(struct disciplina disciplinas[], int quantidadeDiscipli
 }   
     
 
-// FUNÇÃO NOME DISCIPLINA;
+// FUNCAO NOME DISCIPLINA;
     
 void scanNomeDisciplina(char nome[]) {
     printf("Informe o nome da disciplina:\n");
-    fgets(nome, 100, stdin);
+    fgets(nome, SIZE, stdin);
     nome[strcspn(nome, "\n")] = 0;
 }
 
-// FUNÇÃO NOME PROFESSOR;
+// FUNCAO NOME PROFESSOR;
 
 void scanNomeProfessor(char nomeProfessor[]) {
     printf("Informe o nome do Professor:\n");
-    fgets(nomeProfessor, 100, stdin);
+    fgets(nomeProfessor, SIZE, stdin);
     nomeProfessor[strcspn(nomeProfessor, "\n")] = 0;
     
 }
 
-// FUNÇÃO ALTERAR DISCIPLINAS;
+// FUNCAO ALTERAR DISCIPLINAS;
 void alterarDisciplina(struct disciplina disciplinas[], int quantidadeDisciplinas) {
-    // SOLICITANDO CÓDIGO A SER ALTERADO
+    // SOLICITANDO CODIGO A SER ALTERADO
     int altDisciplina = 0;
     system("clear");
     printf("Digite o codigo da disciplina que você deseja alterar: \n");
     scanf("%d", &altDisciplina);
 
-    // PRINT DAS INFORMAÇÕES DA DISCIPLINA DE CÓDIGO ESCOLHIDO
+    // PRINT DAS INFORMAÇÕES DA DISCIPLINA DE CODIGO ESCOLHIDO
     system("clear");
     printf("Codigo: %03d", disciplinas[altDisciplina - 1].codigo);
     printf("\nNome da Disciplina: %s", disciplinas[altDisciplina - 1].nome);
@@ -527,10 +528,10 @@ void alterarDisciplina(struct disciplina disciplinas[], int quantidadeDisciplina
        
         // VERIFICADOR
         int codVerificador = 1;
-        printf("\n\nVoce realmente deseja fazer a alteraçao \n\n1 - SIM\n2 - NAO\n");
+        printf("\n\nVoce realmente deseja fazer a alteracao \n\n1 - SIM\n2 - NAO\n");
         scanf("%d", &codVerificador);
         getchar();
-        // ALTERANDO OS VALORES DAS DISCIPLINAS(SEM ALTERAR O CÓDIGO)
+        // ALTERANDO OS VALORES DAS DISCIPLINAS(SEM ALTERAR O CODIGO)
         if (codVerificador == 1) {
             
             system("clear");
@@ -557,7 +558,7 @@ void alterarDisciplina(struct disciplina disciplinas[], int quantidadeDisciplina
     }
 }
 
-
+// FUNÇÃO DELETAR DISCIPLINAS
 int deletarDisciplina(struct disciplina disciplinas[], int quantidadeDisciplinas) {
    
    
@@ -580,7 +581,7 @@ int deletarDisciplina(struct disciplina disciplinas[], int quantidadeDisciplinas
         
         // VERIFICADOR
         int codVerificador = 0;
-        printf("\n\nVocê realmente deseja excluir?\n1 - SIM\n2 - NAO\n");
+        printf("\n\nVoce realmente deseja excluir?\n1 - SIM\n2 - NAO\n");
         scanf("%d", &codVerificador);
         getchar();
             
@@ -804,7 +805,7 @@ int main() {
                              
                                 //---------------------------- LOOP PARA SOLICITAÇÃO DE INCLUSÕES --------------------------
                                 
-                                // VARIÝVEL PARA CONTROLAR LOOP WHILE;
+                                // VARIAVEL PARA CONTROLAR LOOP WHILE;
                                 
                                 int loop = 1;
                                
@@ -914,7 +915,7 @@ int main() {
 						cadastroInscricao();
 
 						//CONTINUAR
-						if (decisao("Deseja retornar ao menu principal?\n\n1 - SIM\n2 - N�O\n") == 1) {
+						if (decisao("Deseja retornar ao menu principal?\n\n1 - SIM\n2 - NAO\n") == 1) {
 							menu = 5;
 						} else{ menu = 6; }
 						system("clear");
@@ -925,7 +926,7 @@ int main() {
 						imprimirInscricao();
 
 						//CONTINUAR
-						if (decisao("Deseja retornar ao menu principal?\n\n1 - SIM\n2 - N�O\n") == 1) {
+						if (decisao("Deseja retornar ao menu principal?\n\n1 - SIM\n2 - NAO\n") == 1) {
 							menu = 5;
 						} else{ menu = 6; }
 						system("clear");
@@ -938,10 +939,11 @@ int main() {
 					    system("clear");
 
 					    //CONTINUAR
-						if (decisao("Deseja retornar ao menu principal?\n\n1 - SIM\n2 - N�O\n") == 1) {
+						if (decisao("Deseja retornar ao menu principal?\n\n1 - SIM\n2 - NAO\n") == 1) {
 							menu = 5;
 						} else{ menu = 6; }
 						system("clear");
+
 					}
 
 					if(menu == 4){//EXCLUIR------------------------
@@ -951,7 +953,7 @@ int main() {
 					    system("clear");
 
 					    //CONTINUAR
-						if (decisao("Deseja retornar ao menu principal?\n\n1 - SIM\n2 - N�O\n") == 1) {
+						if (decisao("Deseja retornar ao menu principal?\n\n1 - SIM\n2 - NAO\n") == 1) {
 							menu = 5;
 						} else{ menu = 6; }
 						system("clear");
