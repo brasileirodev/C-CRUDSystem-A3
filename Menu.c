@@ -4,7 +4,7 @@
 //@H�CTOR VALENTE (25/11/2023) - Fun��o validar matricula + nova fun��o alterar/deletar.
 //Pedro Soares (26/11/2023) - Correção de caracter especial.
 
-#include <stdio.h/>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #define SIZE 1000
