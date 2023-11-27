@@ -4,6 +4,7 @@
 //@H�CTOR VALENTE (25/11/2023) - Fun��o validar matricula + nova fun��o alterar/deletar.
 //Pedro Soares (26/11/2023) - Correção de caracter especial.
 //Nathan Muñoz (26/11/23) - Implementação dos métodos TipoCurso
+//Pedro Soares (27/11/2023) - Revisão e melhoria de funções
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,10 +40,6 @@ struct tipoCurso {
     char turno[SIZE]; 
 }tipoCurso;
 
-
-
-
-
 struct Aluno {
     int matricula;
     char cpf[MAX_CPF];
@@ -56,7 +53,9 @@ struct Aluno {
 int numTabelaTipoCurso = 0;
 struct tipoCurso tabelaTipoCurso[SIZE];
 struct inscricaoDisciplina tabelaInscricao[SIZE]; //ARRAY
-struct disciplina tabelaDisciplina[SIZE]; //ARRAY
+//struct disciplina tabelaDisciplina[SIZE]; //ARRAY
+// DEFININDO ARRAY DISCIPLINAS UTILIZANDO O "SIZE" PARA DEFINIR UM MAXIMO DE DISCIPLINAS;
+struct disciplina disciplinas[SIZE];
 
 //struct alunos tabelaAluno[SIZE]; Lucas o seu ARRAY GLOBAL AQUI
 
@@ -299,7 +298,7 @@ int autoincrement(char texto[50]){
     //}
     if(texto == "DISCIPLINA"){
        for(int i = 0; i < SIZE; i ++){
-           if( (tabelaDisciplina[i].codigo >= increment)){
+           if( (disciplinas[i].codigo >= increment)){
                increment ++;
            } else{
                break;}
@@ -483,9 +482,30 @@ void delInscricao(){
 
 //--------------------------------------------------FUNCOES DISCIPLINA (PEDRO)-------------------------------------------------------------
 
+// ---------------VARIÝVEIS DICIPLINA(PEDRO)----------------------
+   
+    // VARIAVEL PARA CONTABILIZAR QUANTIDADE DE DISCIPLINAS;
+    int quantidadeDisciplinas = 0;
+    // DEFINIR VARIAVEL "STRUCT" PARA NOVA DISCIPLINA;
+    struct disciplina novaDisciplina;
+    // variavel do alt
+    int altDisc = 0;
+    int codver = 1;
+    //---------------------------------------------------------------
+
+
+
 // FUNCAO DE PRINT;
 void imprimirDisciplinas(struct disciplina disciplinas[], int quantidadeDisciplinas) {
     
+
+    if (quantidadeDisciplinas == 0) { //verifica se existem disciplinas cadastradas
+       system("clear");
+       printf("Nao ha disciplinas cadastradas.\n");
+    
+       
+    } else { 
+
     printf("Disciplinas Cadastradas: \n");
         
     //LOOP UTILIZADO PARA FAZER O PRINT DE TODAS AS DISCIPLINAS CADASTRADAS;
@@ -496,6 +516,7 @@ void imprimirDisciplinas(struct disciplina disciplinas[], int quantidadeDiscipli
         printf("\nNome do Professor: %s", disciplinas[cont].nomeProfessor);
         printf("\nCodigo Tipo Curso: %d", disciplinas[cont].codigoTipoCurso);
         printf("\n");
+    }
     }
 }   
     
@@ -521,6 +542,14 @@ void scanNomeProfessor(char nomeProfessor[]) {
 void alterarDisciplina(struct disciplina disciplinas[], int quantidadeDisciplinas) {
     // SOLICITANDO CODIGO A SER ALTERADO
     int altDisciplina = 0;
+    
+    if (quantidadeDisciplinas == 0) { //verifica se existem disciplinas cadastradas
+       system("clear");
+       printf("Nao ha disciplinas cadastradas.\n");
+    
+       
+    } else { 
+    
     system("clear");
     printf("Digite o codigo da disciplina que você deseja alterar: \n");
     scanf("%d", &altDisciplina);
@@ -568,14 +597,22 @@ void alterarDisciplina(struct disciplina disciplinas[], int quantidadeDisciplina
     system("clear");
     printf("Codigo de disciplina nao existente\n");
     }
+    }
 }
 
 // FUNÇÃO DELETAR DISCIPLINAS
 int deletarDisciplina(struct disciplina disciplinas[], int quantidadeDisciplinas) {
-   
+    int delDisciplina = 0;
    
     // SOLICITANDO CÓDIGO A SER EXCLUIDO
-    int delDisciplina = 0;
+   
+    if (quantidadeDisciplinas == 0) { //verifica se existem disciplinas cadastradas
+       system("clear");
+       printf("Nao ha disciplinas cadastradas.\n");
+    
+       
+    } else {
+
     system("clear");
     printf("Digite o codigo da disciplina que voce deseja excluir:\n");
     scanf("%d", &delDisciplina);
@@ -617,8 +654,8 @@ int deletarDisciplina(struct disciplina disciplinas[], int quantidadeDisciplinas
         printf("\nCodigo de disciplina nao existente\n");
     }
     return quantidadeDisciplinas; // Retorna a quantidade original de disciplinas
+    }
 }
-
 
 //tipoCurso tabelaTipoCurso[SIZE];
 //int numTabelaTipoCurso = 0;
@@ -678,6 +715,7 @@ void readTipoCurso() {
     system("clear");
     
     if (numTabelaTipoCurso == 0){ //Verifica se há cursos a serem exibidos
+        system("clear");
         printf("Não há cursos cadastrados.\n");
     }else {
         
@@ -818,17 +856,7 @@ int main() {
     int numAlunos = 0;
     int menu;
 
-    // ---------------VARIÝVEIS DICIPLINA(PEDRO)----------------------
-    // DEFININDO ARRAY DISCIPLINAS UTILIZANDO O "SIZE" PARA DEFINIR UM MÝXIMO DE DISCIPLINAS;
-    struct disciplina disciplinas[SIZE];
-    // VARIAVEL PARA CONTABILIZAR QUANTIDADE DE DISCIPLINAS;
-    int quantidadeDisciplinas = 0;
-    // DEFINIR VARIAVEL "STRUCT" PARA NOVA DISCIPLINA;
-    struct disciplina novaDisciplina;
-    // variavel do alt
-    int altDisc = 0;
-    int codver = 1;
-    //---------------------------------------------------------------
+    
 
 
     do {
