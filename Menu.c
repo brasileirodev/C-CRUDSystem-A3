@@ -1,3 +1,4 @@
+
 //@HCTOR VALENTE (22/11/2023) - Menu e implementação da usabilidade inscrição de disciplina.
 //@LUCAS (23/11/2023) - Menu e implementação da usabilidade cadastro de aluno.
 //@HCTOR VALENTE (23/11/2023) - Correção caracter especial + função inclusão em método.
@@ -7,6 +8,7 @@
 //Pedro Soares (27/11/2023) - Revisão e melhoria de funções
 //HECTOR VAENTE (27/11/2023) - IMPLEMENTACAO VALIDACAO DE CADASTROS EXISTENTES TABELA INSCRICAO DE DISCIPLINA
 //Pedro Soares (27/11/2023) - Revisão e melhoria de funções + aula
+//Lucas (28/11/2023) - matricula automatica e imprimir todas as matriculas
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -58,6 +60,7 @@ int totalDisciplinas = 0; // VARIAVEL PARA CONTABILIZAR QUANTIDADE DE DISCIPLINA
 //-------------------------------------------------------------------------------------------------------------------------------------------
 struct Aluno tabelaAluno[SIZE];
 //------------------------------------------------------------FUNCOES ALUNO (LUCAS)------------------------------------------------------------
+
 int ultimaMatricula() {
     int controlematricula = -1;
     for (int i = 0; i < SIZE; i++) {
@@ -69,13 +72,9 @@ int ultimaMatricula() {
 }
 
 void cadastroAluno() {
-    int i = ultimaMatricula();
-
-    for (i ; i < SIZE; i++) {
-        system("clear");
-        printf("Digite a matricula do aluno: \n");
-        scanf("%d", &tabelaAluno[i].matricula);
-
+	tabelaAluno[i].matricula = ultimaMatricula() + 1;
+	int i = ultimaMatricula();
+	    
         printf("Digite o CPF:\n");
         scanf("%d", &tabelaAluno[i].cpf);
         fflush(stdin);
@@ -100,65 +99,118 @@ void cadastroAluno() {
             break;
         }
     }
-}
+
 
 void imprimirAluno() {
     for (int i = 0; i < SIZE; i++) {
         if (tabelaAluno[i].matricula != 0) {
-            printf("Matricula: %d\n", tabelaAluno[i].matricula);
-            printf("CPF: %d\n", tabelaAluno[i].cpf);
-            printf("Nome: %s", tabelaAluno[i].nome);
-            printf("Sexo: %s", tabelaAluno[i].sexo);
-            printf("E-mail: %s", tabelaAluno[i].email);
-            printf("Codigo do Curso: %d\n\n", tabelaAluno[i].codigotipoCurso);
+            printf("\nMatricula: %d", tabelaAluno[i].matricula);
+            printf("\nCPF: %d", tabelaAluno[i].cpf);
+            printf("\nNome: %s", tabelaAluno[i].nome);
+            printf("\nSexo: %c", tabelaAluno[i].sexo);
+            printf("\nE-mail: %s", tabelaAluno[i].email);
+            printf("\nCodigo do Curso: %d", tabelaAluno[i].codigotipoCurso);
+            printf("\n");
         }
     }
 }
 
-void altAluno() {
+void altAluno(){
+    
 
-    int cont = 0;
+    int matricula;
     printf("Digite a matricula que voce deseja alterar: \n");
     scanf("%d", &matricula);
-
-inicio_loop:
+    
+    inicio_loop:
     system("clear");
-    for (int i = 0; i < SIZE; i++) {
-        if (tabelaAluno[i].matricula == matricula) {
-            tabelaAluno[i].matricula = cont;
-            cont++;
-            printf("\nMatricula: %d\n", tabelaAluno[i].matricula);
-            printf("CPF: %d\n", tabelaAluno[i].cpf);
-            printf("Nome: %s", tabelaAluno[i].nome);
-            printf("Sexo: %s", tabelaAluno[i].sexo);
-            printf("E-mail: %s", tabelaAluno[i].email);
-            printf("Codigo do Curso: %d\n", tabelaAluno[i].codigotipoCurso);
+    for (int i = 0; i < SIZE ; i ++){ //FOR PARA LISTAR TODAS AS INCRICOES DE UMA MATRICULA SELECIONADA
+        tabelaAluno[i].matricula = 0;
+        if(tabelaAluno[i].matricula == matricula){
+                tabelaAluno[i].matricula = cont;
+                cont ++;
+                printf("\nMatricula: %d", tabelaAluno[i].matricula);
+                printf("\nCPF: %d", tabelaAluno[i].cpf);
+                printf("Nome: %s", tabelaAluno[i].nome);
+                printf("Sexo: %s", tabelaAluno[i].sexo);
+                printf("E-mail: %s", tabelaAluno[i].email);
+                printf("Codigo do Curso: %s", tabelaAluno[i].codigotipoCurso);
+
         }
     }
 
-    if (decisao("Voce tem certeza que deseja alterar o registro:\n\n1 - SIM\n2 - NAO\n") == 1) {
-        system("clear");
-
-	printf("Digite uma nova matricula: \n");
-        scanf("%d", &tabelaAluno[cont].matricula);
-        
-	printf("Digite o nome do aluno: \n");
-        fflush(stdin);
-        fgets(tabelaAluno[cont].nome, SIZE, stdin);
-        fflush(stdin);
-        break;
-    } else {
-        if (i == SIZE - 1) {
-            system("clear");
-            printf("ALERTA: MATRICULA NAO LOCALIZADA.\n\n");
-            if (decisao("Deseja tentar alterar novamente:\n\n1 - SIM\n2 - NAO\n") == 1) {
-                goto inicio_loop;
-            } else {
-                goto fim_loop;
+            
+            if (decisao("Voce tem certeza que deseja alterar o registro:\n\n1 - SIM\n2 - NAO\n") == 1){ //CERTEZA QUE DESEJA EXCLUIR?
+                system("clear");
+	         printf("Digite uma nova matricula: \n"); //NOVOS DADOS
+	         scanf("%d", &tabelaAluno[i].matricula);
+	         printf("Digite o nome do aluno: \n"); //NOVOS DADOS
+	         fgets(&tabelaAluno[i].aluno, SIZE, stdin);
+             getchar();
+	         break;
+            }
+        }else{
+            if(i == 999){ //ELSE PARA INFORMAR QUE O CODIGO NAO FOI LOCALIZADO
+                system("clear");
+                printf("ALERTA: MATRICULA NAO LOCALIZADA.\n\n");
+                if (decisao("Deseja tentar alterar novamente:\n\n1 - SIM\n2 - NAO\n") == 1){//DESEJA TENTAR NOVAMENTE?
+                    goto inicio_loop;
+                }else{
+                    goto fim_loop;
+                }
             }
         }
     }
+    fim_loop:
 }
+void delAluno(){
+
+    int matricula;
+    printf("Digite a matricula que voce deseja deletar: \n");
+    scanf("%d", &matricula);
+    
+    inicio_loop:
+    system("clear");
+    for (int i = 0; i < SIZE ; i ++){ //FOR PARA LISTAR TODAS AS INCRICOES DE UMA MATRICULA SELECIONADA
+        tabelaAluno[i].cpf = 0;
+        if(tabelaAluno[i].matricula == matricula){
+                tabelaAluno[i].matricula = cont;
+                cont ++;
+                printf("\nMatricula: %d", tabelaAluno[i].matricula);
+                printf("CPF: %d", tabelaAluno[i].cpf);
+                printf("\nNome: %s", tabelaAluno[i].nome);
+                printf("\nSexo: %s", tabelaAluno[i].sexo);
+                printf("\nE-mail: %s", tabelaAluno[i].email);
+                printf("\nCodigo do Curso: %s", tabelaAluno[i].codigotipoCurso);
+
+        }
+    }
+            
+            if (decisao("Voce tem certeza que deseja deletar a matricula:\n\n1 - SIM\n2 - NAO\n") == 1){ //CERTEZA QUE DESEJA EXCLUIR?
+                system("clear");
+                tabelaAluno[i].matricula = NULL;
+                tabelaAluno[i].cpf = NULL;
+                tabelaAluno[i].nome = "";
+                tabelaAluno[i].sexo = "";
+                tabelaAluno[i].email = "";
+                tabelaAluno[i].codigotipoCurso = NULL;
+	            break;
+            }
+        }else{
+            if(i == 999){ //ELSE PARA INFORMAR QUE O CODIGO NAO FOI LOCALIZADO
+                system("clear");
+                printf("ALERTA: CODIGO NAO LOCALIZADO.\n\n");
+                if (decisao("Deseja tentar deletar novamente:\n\n1 - SIM\n2 - NAO\n") == 1){//DESEJA TENTAR NOVAMENTE?
+                    goto inicio_loop;
+                }else{
+                    goto fim_loop;
+                }
+            }
+        }
+    }
+    fim_loop:
+}
+
 
 //----------------------------------------------------FUNCOES INSCRICOES & MENU (HECTOR)-----------------------------------------------------
 //FUNCAO NEGRITO - Coloca um texto em negrito. Utilize bold(1) para iniciar e bold(0) para finalizar
@@ -925,22 +977,18 @@ int main() {
 	                    int menu = validaMenu(5, 1);
 	
 	                    if (menu == 1) {
-	                        system("clear");
-	                        printf("Cadastro de Aluno\n");
-	                        cadastrarAluno(alunos, &numAlunos);
-	                    } else if (menu == 2) {
-	                        system("clear");
-	                        printf("Listagem de Aluno\n");
-	                        listarAluno(alunos, numAlunos);
+				cadastroAluno();
+                		break;
+			    } else if (menu == 2) {
+	                        imprimirAluno();
+				break;
 	                    } else if (menu == 3) {
-	                        system("clear");
-	                        printf("Atualizacao de Aluno\n");
-	                        atualizarAluno(alunos, numAlunos);
-	                    } else if (menu == 4) {
-	                        system("clear");
-	                        printf("Exclusao de Aluno\n");
-	                        excluirAluno(alunos, &numAlunos);
-	                    } else if (menu == 5) {
+				altAluno();
+				break;
+			    } else if (menu == 4) {
+				delAluno();
+				break;
+			    } else if (menu == 5) {
 	                        // Voltar ao menu principal
                             system("clear");
 	                        break;
