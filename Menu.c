@@ -73,42 +73,49 @@ int ultimaMatricula() {
 }
 
 void cadastroAluno() {
-	tabelaAluno[i].matricula = ultimaMatricula() + 1;
-	int i = ultimaMatricula();
-	    
-        printf("Digite o CPF:\n");
-        scanf("%d", &tabelaAluno[i].cpf);
-        fflush(stdin);
+    int i = ultimaMatricula();
+    tabelaAluno[i].matricula = ultimaMatricula() + 1;
 
-        printf("Digite o nome do aluno: \n");
-        fgets(tabelaAluno[i].nome, SIZE, stdin);
-        fflush(stdin);
+    system("clear");
+    printf("Digite o CPF:\n");
+    scanf("%d", &tabelaAluno[i].cpf);
+    while (getchar() != '\n');  // Limpa o buffer
 
-        printf("Digite o sexo do aluno: \n");
-        fgets(tabelaAluno[i].sexo, SIZE, stdin);
-        fflush(stdin);
+    system("clear");
+    printf("Digite o nome do aluno: \n");
+    fgets(tabelaAluno[i].nome, SIZE, stdin);
+    tabelaAluno[i].nome[strcspn(tabelaAluno[i].nome, "\n")] = '\0';  // Remove o \n
 
-        printf("Digite o e-mail do aluno: \n");
-        fgets(tabelaAluno[i].email, SIZE, stdin);
-        fflush(stdin);
+    system("clear");
+    printf("Digite o sexo do aluno: \n");
+    fgets(tabelaAluno[i].sexo, SIZE, stdin);
+    tabelaAluno[i].sexo[strcspn(tabelaAluno[i].sexo, "\n")] = '\0';  // Remove o \n
 
-        printf("Digite o codigo do tipo de curso: \n");
-        scanf("%d", &tabelaAluno[i].codigotipoCurso);
+    system("clear");
+    printf("Digite o e-mail do aluno: \n");
+    fgets(tabelaAluno[i].email, SIZE, stdin);
+    tabelaAluno[i].email[strcspn(tabelaAluno[i].email, "\n")] = '\0';  // Remove o \n
 
-        if (decisao("Deseja incluir outra inscricao?\n\n1 - SIM\n2 - NAO\n") == 2) {
-            system("clear");
-            break;
-        }
+    system("clear");
+    printf("Digite o codigo do tipo de curso: \n");
+    scanf("%d", &tabelaAluno[i].codigotipoCurso);
+    while (getchar() != '\n');  // Limpa o buffer
+
+    if (decisao("Deseja incluir outra inscricao?\n\n1 - SIM\n2 - NAO\n") == 2) {
+        system("clear");
     }
+}
 
 
 void imprimirAluno() {
+    
+    system("clear");
     for (int i = 0; i < SIZE; i++) {
         if (tabelaAluno[i].matricula != 0) {
             printf("\nMatricula: %d", tabelaAluno[i].matricula);
             printf("\nCPF: %d", tabelaAluno[i].cpf);
             printf("\nNome: %s", tabelaAluno[i].nome);
-            printf("\nSexo: %c", tabelaAluno[i].sexo);
+            printf("\nSexo: %s", tabelaAluno[i].sexo);
             printf("\nE-mail: %s", tabelaAluno[i].email);
             printf("\nCodigo do Curso: %d", tabelaAluno[i].codigotipoCurso);
             printf("\n");
@@ -116,20 +123,16 @@ void imprimirAluno() {
     }
 }
 
-void altAluno(){
-    
-
+void altAluno() {
     int matricula;
-    printf("Digite a matricula que voce deseja alterar: \n");
-    scanf("%d", &matricula);
-    
-    inicio_loop:
-    system("clear");
-    for (int i = 0; i < SIZE ; i ++){ //FOR PARA LISTAR TODAS AS INCRICOES DE UMA MATRICULA SELECIONADA
-        tabelaAluno[i].matricula = 0;
-        if(tabelaAluno[i].matricula == matricula){
-                tabelaAluno[i].matricula = cont;
-                cont ++;
+
+    do {
+        printf("Digite a matricula que voce deseja alterar: \n");
+        scanf("%d", &matricula);
+
+        for (int i = 0; i < SIZE; i++) {
+            if (tabelaAluno[i].matricula == matricula) {
+                system("clear");
                 printf("\nMatricula: %d", tabelaAluno[i].matricula);
                 printf("\nCPF: %d", tabelaAluno[i].cpf);
                 printf("Nome: %s", tabelaAluno[i].nome);
@@ -137,46 +140,43 @@ void altAluno(){
                 printf("E-mail: %s", tabelaAluno[i].email);
                 printf("Codigo do Curso: %s", tabelaAluno[i].codigotipoCurso);
 
-        }
-    }
-
-            
-            if (decisao("Voce tem certeza que deseja alterar o registro:\n\n1 - SIM\n2 - NAO\n") == 1){ //CERTEZA QUE DESEJA EXCLUIR?
-                system("clear");
-	         printf("Digite uma nova matricula: \n"); //NOVOS DADOS
-	         scanf("%d", &tabelaAluno[i].matricula);
-	         printf("Digite o nome do aluno: \n"); //NOVOS DADOS
-	         fgets(&tabelaAluno[i].aluno, SIZE, stdin);
-             getchar();
-	         break;
-            }
-        }else{
-            if(i == 999){ //ELSE PARA INFORMAR QUE O CODIGO NAO FOI LOCALIZADO
-                system("clear");
-                printf("ALERTA: MATRICULA NAO LOCALIZADA.\n\n");
-                if (decisao("Deseja tentar alterar novamente:\n\n1 - SIM\n2 - NAO\n") == 1){//DESEJA TENTAR NOVAMENTE?
-                    goto inicio_loop;
-                }else{
-                    goto fim_loop;
+                if (decisao("\n\nVoce tem certeza que deseja alterar o registro:\n\n1 - SIM\n2 - NAO\n") == 1) {
+                    system("clear");
+                    printf("Digite uma nova matricula: \n");
+                    scanf("%d", &tabelaAluno[i].matricula);
+                    printf("Digite o nome do aluno: \n");
+                    fgets(tabelaAluno[i].nome, SIZE, stdin);
+                    getchar();
+                    printf("Registro alterado com sucesso!\n");
+                } else {
+                    printf("Registro NAO foi alterado.\n");
                 }
+
+                return;  // Encerra a função após a alteração ou decisão de não alterar
             }
         }
-    }
-    fim_loop:
-}
-void delAluno(){
 
+        // Se o loop terminou e a matrícula não foi encontrada
+        system("clear");
+        printf("ALERTA: MATRICULA NAO LOCALIZADA.\n\n");
+
+    } while (decisao("Deseja tentar alterar novamente:\n\n1 - SIM\n2 - NAO\n") == 1);
+
+    printf("Retornando ao menu.\n");
+}
+
+
+void delAluno() {
+    struct Aluno vazio;
     int matricula;
-    printf("Digite a matricula que voce deseja deletar: \n");
-    scanf("%d", &matricula);
-    
-    inicio_loop:
-    system("clear");
-    for (int i = 0; i < SIZE ; i ++){ //FOR PARA LISTAR TODAS AS INCRICOES DE UMA MATRICULA SELECIONADA
-        tabelaAluno[i].cpf = 0;
-        if(tabelaAluno[i].matricula == matricula){
-                tabelaAluno[i].matricula = cont;
-                cont ++;
+
+    do {
+        printf("Digite a matricula que voce deseja deletar: \n");
+        scanf("%d", &matricula);
+
+        for (int i = 0; i < SIZE; i++) {
+            if (tabelaAluno[i].matricula == matricula) {
+                system("clear");
                 printf("\nMatricula: %d", tabelaAluno[i].matricula);
                 printf("CPF: %d", tabelaAluno[i].cpf);
                 printf("\nNome: %s", tabelaAluno[i].nome);
@@ -184,32 +184,25 @@ void delAluno(){
                 printf("\nE-mail: %s", tabelaAluno[i].email);
                 printf("\nCodigo do Curso: %s", tabelaAluno[i].codigotipoCurso);
 
-        }
-    }
-            
-            if (decisao("Voce tem certeza que deseja deletar a matricula:\n\n1 - SIM\n2 - NAO\n") == 1){ //CERTEZA QUE DESEJA EXCLUIR?
-                system("clear");
-                tabelaAluno[i].matricula = NULL;
-                tabelaAluno[i].cpf = NULL;
-                tabelaAluno[i].nome = "";
-                tabelaAluno[i].sexo = "";
-                tabelaAluno[i].email = "";
-                tabelaAluno[i].codigotipoCurso = NULL;
-	            break;
-            }
-        }else{
-            if(i == 999){ //ELSE PARA INFORMAR QUE O CODIGO NAO FOI LOCALIZADO
-                system("clear");
-                printf("ALERTA: CODIGO NAO LOCALIZADO.\n\n");
-                if (decisao("Deseja tentar deletar novamente:\n\n1 - SIM\n2 - NAO\n") == 1){//DESEJA TENTAR NOVAMENTE?
-                    goto inicio_loop;
-                }else{
-                    goto fim_loop;
+                if (decisao("\n\nVoce tem certeza que deseja deletar a matricula:\n\n1 - SIM\n2 - NAO\n") == 1) {
+                    system("clear");
+                    tabelaAluno[i] = vazio;
+                    printf("Matricula deletada com sucesso!\n");
+                } else {
+                    printf("Matricula NAO foi deletada.\n");
                 }
+
+                return;  // Encerra a função após a exclusão ou decisão de não excluir
             }
         }
-    }
-    fim_loop:
+
+        // Se o loop terminou e a matrícula não foi encontrada
+        system("clear");
+        printf("ALERTA: MATRICULA NAO LOCALIZADA.\n\n");
+
+    } while (decisao("Deseja tentar deletar novamente:\n\n1 - SIM\n2 - NAO\n") == 1);
+
+    printf("Retornando ao menu.\n");
 }
 
 
@@ -974,6 +967,12 @@ void deleteTipoCurso() {
 //-----------------------------------------------------------INICIO MAIN--------------------------------------------------------------------
 int main() {
 
+    system("clear");
+    //struct Aluno alunos[MAX_ALUNOS];
+    int numAlunos = 0;
+    int menu;
+
+    
 
 
     do {
