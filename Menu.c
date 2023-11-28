@@ -1,8 +1,7 @@
-
-//@HCTOR VALENTE (22/11/2023) - Menu e implementação da usabilidade inscrição de disciplina.
+//@HECTOR VALENTE (22/11/2023) - Menu e implementação da usabilidade inscrição de disciplina.
 //@LUCAS (23/11/2023) - Menu e implementação da usabilidade cadastro de aluno.
-//@HCTOR VALENTE (23/11/2023) - Correção caracter especial + função inclusão em método.
-//@HCTOR VALENTE (25/11/2023) - Funo validar matricula + nova funo alterar/deletar.
+//@HECTOR VALENTE (23/11/2023) - Correção caracter especial + função inclusão em método.
+//@HECTOR VALENTE (25/11/2023) - Funo validar matricula + nova funo alterar/deletar.
 //Pedro Soares (26/11/2023) - Correção de caracter especial.
 //Nathan Muñoz (26/11/23) - Implementação dos métodos TipoCurso
 //Pedro Soares (27/11/2023) - Revisão e melhoria de funções
@@ -10,13 +9,12 @@
 //Pedro Soares (27/11/2023) - Revisão e melhoria de funções + aula
 //Lucas (28/11/2023) - matricula automatica e imprimir todas as matriculas
 //Pedro (28/11/2023) - Finalização da Disciplina com a variavel codigoTipoCurso, melhoria do delete, melhoria do incluirTipoCurso(), revisão dos códigos.
+//HECTOR (28/11/2023) - IMPLEMENTACAO DA VALIDACAO MATRICULA, DISCIPLINA E AMARRACAO TIPOCURSO E DISCIPLINA
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #define SIZE 1000
-
-
 
 //DECLARACAO DE OBJETOS
 struct Aluno {
@@ -106,7 +104,6 @@ void cadastroAluno() {
     }
 }
 
-
 void imprimirAluno() {
     
     system("clear");
@@ -138,7 +135,7 @@ void altAluno() {
                 printf("Nome: %s", tabelaAluno[i].nome);
                 printf("Sexo: %s", tabelaAluno[i].sexo);
                 printf("E-mail: %s", tabelaAluno[i].email);
-                printf("Codigo do Curso: %s", tabelaAluno[i].codigotipoCurso);
+                printf("Codigo do Curso: %d", tabelaAluno[i].codigotipoCurso);
 
                 if (decisao("\n\nVoce tem certeza que deseja alterar o registro:\n\n1 - SIM\n2 - NAO\n") == 1) {
                     system("clear");
@@ -182,7 +179,7 @@ void delAluno() {
                 printf("\nNome: %s", tabelaAluno[i].nome);
                 printf("\nSexo: %s", tabelaAluno[i].sexo);
                 printf("\nE-mail: %s", tabelaAluno[i].email);
-                printf("\nCodigo do Curso: %s", tabelaAluno[i].codigotipoCurso);
+                printf("\nCodigo do Curso: %d", tabelaAluno[i].codigotipoCurso);
 
                 if (decisao("\n\nVoce tem certeza que deseja deletar a matricula:\n\n1 - SIM\n2 - NAO\n") == 1) {
                     system("clear");
@@ -211,6 +208,23 @@ void delAluno() {
 void bold(int status) {
 	static const char *seq[] = {"\x1b[0m", "\x1b[1m"};
 	printf("%s", seq[!!status]);
+}
+
+//FUNCAO DECISAO - Tem como objetivo receber um CHAR para imprimir na tela e perguntar ao usuario se ele deseja continuar
+int decisao(char texto[200]){
+
+    int decisao;
+
+    printf("%s\n", texto);
+    scanf("%d", &decisao);
+
+    while (decisao != 1 && decisao != 2) {
+        system("clear");
+        printf("Digito invalido, por favor digite (1 - SIM|2 - NAO): \n"); 
+        scanf("%s", &decisao);
+    }
+    return decisao;
+    system("clear");
 }
 
 char convData(int intData) {
@@ -265,23 +279,6 @@ int validaMenu(int maior, int menor){
 	return menu;
 }
 
-//FUNCAO DECISAO - Tem como objetivo receber um CHAR para imprimir na tela e perguntar ao usuario se ele deseja continuar
-int decisao(char texto[200]){
-
-    int decisao;
-
-    printf("%s\n", texto);
-    scanf("%d", &decisao);
-
-    while (decisao != 1 && decisao != 2) {
-        system("clear");
-        printf("Digito invalido, por favor digite (1 - SIM|2 - NAO): \n"); 
-        scanf("%s", &decisao);
-    }
-    return decisao;
-    system("clear");
-}
-
 //ULTIMO REGISTRO INSCRICAO DE DISCIPLINA - Funcao tem como objetivo retornar a posicao da ultima matricula registrada
 int ultimoRegistro(){
     int controle;
@@ -293,92 +290,122 @@ int ultimoRegistro(){
     return(controle + 1);
 }
 
-//FUNCAO VALIDACAO CADASTRO MATRICULA - Funcao tem como objetivo garantir o usuario escolheu uma matricula j existente
-/*int validaMatricula(int matricula){
+//FUNCAO VALIDACAO CADASTRO MATRICULA - Funcao tem como objetivo garantir o usuario escolheu uma matricula j� existente
+int validaMatricula(int matricula){
     for(int i = 0; i < SIZE; i++){
-        if(alunos[i].matricula == matricula){
-            matricula = NULL;
+        if(tabelaAluno[i].matricula == matricula){
+            matricula = -1;
             break;
         }
     }
     return(matricula);
-}*/
+}
 
 //FUNCAO VALIDACAO CADASTRO TIPOCURSO/DISCIPLINA - Funcao tem como objetivo garantir o usuario escolheu uma disciplina existente dentro do curso registrado em sua matricula
-/*char validaDisciplina(int matricula, int disciplina){
-    
+int validaDisciplina(int matricula, int disciplina){
+    //char resposta[SIZE];
     for(int i = 0; i < SIZE; i++){
         if(tabelaDisciplina[i].codigo == disciplina){
             for(int j = 0; j < SIZE; j++){
-                if( (alunos[j].matricula == matricula) && (alunos[j].codigoTipoCurso == tabelaDisciplina[i].codigoTipoCurso) ){
-                    return("CONFIRMACAO");
+                if( (tabelaAluno[j].matricula == matricula) && (tabelaAluno[j].codigotipoCurso == tabelaDisciplina[i].codigoTipoCurso) ){
+                    return(1);
                     break;
-                }if else(j == 999){
-                    return("ALERTA: Aluno no inscrito nesse TIPO DE CURSO.");
+                }
+                if (j == 999){
+                    return(2);
                     break;
                 }
             }
-            alunos[i].codigotipoCurso
-        } if else(i == 999){
-            return("ALERTA: Disciplina no cadastrada.");
+        } 
+        if(i == 999){
+            return(3);
             break;
         }
     }
-    return(disciplina);
-}*/
+}
 
 //FUNCAO INCLUIR INSCRICAO DE DISCIPLINA - Metodo utilizado para incluir uma nova INSCRICAO DE DISCIPLINA
 void cadastroInscricao(){
 
-    int vMatricula, vCodDisciplina, vDataInscricao; //VARIAVEL DE MEMORIA LOCAL
-
+    int vCadastro; //VARIAVEL DE MEMORIA LOCAL
+    
     for(int i = ultimoRegistro(); i < SIZE; i ++){
-
+        
+        vCadastro = NULL; //VARIAVEL DE MEMORIA LOCAL
 	    system("clear");
 	    printf("Digite a MATRICULA do aluno: \n");
-	    scanf("%d", &tabelaInscricao[i].matricula);
-        /*if(validaMatricula(vMatricula) == NULL){
+	    scanf("%d", &vCadastro);
+        
+        //FUNCAO VALIDA MATRICULA ---------------------------------------------------------------------------------------------------
+        if(validaMatricula(vCadastro) != -1){
             system("clear");
-            if(decisao("MATRICULA ja existente, deseja digitar outra MATRICULA?\n\n1 - SIM\n2 - NAO\n") == 1){
+            if(decisao("MATRICULA n�o existe. Deseja reiniciar o cadastro?\n\n1 - SIM\n2 - NAO\n") == 1){
                 goto ERRO_INS_S;
-            } else{ 
+            }else{ 
                 goto ERRO_INS_N;
             }
         }else{
-            tabelaInscricao[i].matricula = vMatricula;
-        }*/
-
+        //GRAVA MATRICULA -----------------------------------------------------------------------------------------------------------
+            tabelaInscricao[i].matricula = vCadastro;
+        }
+        
+        vCadastro = NULL; //LIMPA VARIAVEL LOCAL
 		printf("Digite o CODIGO DA DISCIPLINA do CURSO: \n");
-		scanf("%d", &tabelaInscricao[i].codDisciplina);
+		scanf("%d", &vCadastro);
+		
+		//FUNCAO VALIDA DISCIPLINA --------------------------------------------------------------------------------------------------
+		if(validaDisciplina(tabelaInscricao[i].matricula, vCadastro) == 1){// TUDO OK
+        //GRAVA DISCIPLINA ----------------------------------------------------------------------------------------------------------    
+            tabelaInscricao[i].codDisciplina = vCadastro;
+        }else{
+            system("clear");
+            tabelaInscricao[i].matricula = NULL;
+            if(validaDisciplina(tabelaInscricao[i].matricula, vCadastro) == 3){ //DISCIPLINA NAO CADASTRADA
+                if(decisao("DISCIPLINA n�o existe. Deseja reiniciar o cadastro?\n\n1 - SIM\n2 - NAO\n") == 1){
+                    goto ERRO_INS_S;
+                }else{ 
+                    goto ERRO_INS_N;
+                }
+            }else{ //DISCIPLINA FORA DA GRADE
+                system("clear");
+                tabelaInscricao[i].matricula = NULL; 
+                if(decisao("DISCIPLINA fora da grade do CURSO do aluno. Deseja reiniciar o cadastro?\n\n1 - SIM\n2 - NAO\n") == 1){
+                    goto ERRO_INS_S;
+                }else{ 
+                    goto ERRO_INS_N;
+                }
+            }
 
-		printf("Digite a DATA DE INSCRICAO (DDMMAAAA): \n");
+        }
+        
+        //GRAVA DATA -----------------------------------------------------------------------------------------------------------------
+		printf("Digite a DATA DE INSCRICAO (DDMMAAAA): \n"); //GRAVA DATA
 		scanf("%d", &tabelaInscricao[i].dataInscricao);
 		
-		//CONTROLE DE DUPLICIDADE DE INSCRICAO
-		/*for(int j = i; j >= 0; j--){
-		    if( (tabelaInscricao[j].matricula == vMatricula) && (tabelaInscricao[j].codDisciplina == vCodDisciplina) && (tabelaInscricao[j].dataInscricao = vDataInscricao)){
-		        if(decisao("INSCRICAO ja existente, deseja digitar outra INSCRICAO?\n\n1 - SIM\n2 - NAO\n") == 1){
-                    //goto ERRO_INS_S;
-                    printf("PAREI AQUI 1");
+		//CONTROLE DE DUPLICIDADE DE INSCRICAO ---------------------------------------------------------------------------------------
+		/*for(int j = ultimoRegistro() - 1; j >= 0; j--){
+		    if( (tabelaInscricao[i].matricula == tabelaInscricao[j].matricula) && (tabelaInscricao[i].codDisciplina == tabelaInscricao[j].codDisciplina) && (tabelaInscricao[i].dataInscricao = tabelaInscricao[j].dataInscricao)){
+		        system("clear");
+		        tabelaInscricao[i].matricula = NULL;
+		        tabelaInscricao[i].codDisciplina = NULL;
+		        tabelaInscricao[i].dataInscricao = NULL;
+		        if(decisao("REGISTRO duplicado. Deseja digitar outra INSCRICAO?\n\n1 - SIM\n2 - NAO\n") == 1){
+                    goto ERRO_INS_S;
                 } else{ 
-                    //goto ERRO_INS_N;
-                    printf("PAREI AQUI 2");
+                    goto ERRO_INS_N;
                 }
 		    }
-		}
-		
-		tabelaInscricao[i].matricula = vMatricula;
-		tabelaInscricao[i].codDisciplina = vCodDisciplina;
-		tabelaInscricao[i].dataInscricao = vDataInscricao;*/
+		}*/
+
 		system("clear");
 
 		//CONTINUAR
 		if (decisao("Deseja incluir outra inscricao?\n\n1 - SIM\n2 - NAO\n") == 2) {
-			//ERRO_INS_N:
+			ERRO_INS_N:
 			system("clear");
 			break;
 		}
-		//ERRO_INS_S:
+		ERRO_INS_S:
 	}
 }
 
@@ -400,12 +427,13 @@ void imprimirInscricao(){
 //FUNCAO ALTERAR INSCRICAO DE DISCIPLINA - Funcao utilizada para alterar registro de INSCRICAO DE DISCIPLINA
 void altInscricao(){
     
-    int vMatricula, vCodigo, cont = 1;// VARIAVEL LOCAL
+    int vMatricula, vDisciplina, vCodigo, cont;// VARIAVEL LOCAL
     
     printf("Digite a matricula que voce deseja alterar uma inscricao: \n");
     scanf("%d", &vMatricula);
     
     inicio_loop:
+    cont = 1;
     system("clear");
     for (int i = 0; i < SIZE ; i ++){ //FOR PARA LISTAR TODAS AS INCRICOES DE UMA MATRICULA SELECIONADA
         tabelaInscricao[i].codigo = 0;
@@ -415,7 +443,9 @@ void altInscricao(){
                 printf("Codigo: %d", tabelaInscricao[i].codigo);
                 printf("\nMatricula: %d", tabelaInscricao[i].matricula);
                 printf("\nCod. Disciplina: %d", tabelaInscricao[i].codDisciplina);
-                printf("\nData de inscricao: %d\n\n", tabelaInscricao[i].dataInscricao);
+                printf("\nData de inscricao: ");
+                convData(tabelaInscricao[i].dataInscricao);
+                printf("\n\n");
         }
     }
     printf("Digite o codigo de inscricao que voce deseja alterar: \n");
@@ -425,18 +455,42 @@ void altInscricao(){
         if(tabelaInscricao[i].codigo == vCodigo){
             printf("Matricula: %d", tabelaInscricao[i].matricula);
             printf("\nCod. Disciplina: %d", tabelaInscricao[i].codDisciplina);
-            printf("\nData de inscricao: %d\n\n", tabelaInscricao[i].dataInscricao);
-            
-            if (decisao("Voce tem certeza que deseja alterar o registro:\n\n1 - SIM\n2 - NAO\n") == 1){ //CERTEZA QUE DESEJA EXCLUIR?
+            printf("\nData de inscricao: ");
+            convData(tabelaInscricao[i].dataInscricao);
+            printf("\n\n");
+
+            if (decisao("Voce tem certeza que deseja alterar o registro:\n\n1 - SIM\n2 - NAO\n") == 1){ //CERTEZA QUE DESEJA EALTERAR?
                 system("clear");
 	         printf("Digite um o NOVO CODIGO DA DISCIPLINA do CURSO: \n"); //NOVOS DADOS
-	         scanf("%d", &tabelaInscricao[i].codDisciplina);
+	         //scanf("%d", &tabelaInscricao[i].codDisciplina);
+	         scanf("%d", &vDisciplina);
+	         
+	         //VALIDAR DISCIPLINA
+	         if(validaDisciplina(tabelaInscricao[i].matricula, vDisciplina) == 1){ //TUDO OK
+	            tabelaInscricao[i].codDisciplina = vDisciplina; //GRAVA DISCIPLINA
+	         }else{
+	            system("clear");
+                if(validaDisciplina(tabelaInscricao[i].matricula, vDisciplina) == 3){ //DISCIPLINA NAO CADASTRADA
+                    if(decisao("DISCIPLINA n�o existe. Deseja reiniciar o cadastro?\n\n1 - SIM\n2 - NAO\n") == 1){
+                        goto inicio_loop;
+                    }else{ 
+                        goto fim_loop;
+                    }
+	            }else{ //DISCIPLINA FORA DA GRADE
+                    if(decisao("DISCIPLINA fora da grade do CURSO do aluno. Deseja reiniciar o cadastro?\n\n1 - SIM\n2 - NAO\n") == 1){
+                        goto inicio_loop;
+                    }else{ 
+                        goto fim_loop;
+                    }
+	            }
+	         }
+	         
 	         printf("Digite uma NOVA DATA DE INSCRICAO (DDMMAAAA): \n"); //NOVOS DADOS
 	         scanf("%d", &tabelaInscricao[i].dataInscricao);
 	         break;
             }
         }else{
-            if(i == 999){ //ELSE PARA INFORMAR QUE O CODIGO NO FOI LOCALIZADO
+            if(i == 999){ //ELSE PARA INFORMAR QUE O CODIGO NAO FOI LOCALIZADO
                 system("clear");
                 printf("ALERTA: CODIGO NAO LOCALIZADO.\n\n");
                 if (decisao("Deseja tentar alterar novamente:\n\n1 - SIM\n2 - NAO\n") == 1){//DESEJA TENTAR NOVAMENTE?
@@ -468,7 +522,9 @@ void delInscricao(){
                 printf("Codigo: %d", tabelaInscricao[i].codigo);
                 printf("\nMatricula: %d", tabelaInscricao[i].matricula);
                 printf("\nCod. Disciplina: %d", tabelaInscricao[i].codDisciplina);
-                printf("\nData de inscricao: %d\n\n", tabelaInscricao[i].dataInscricao);
+                printf("\nData de inscricao: ");
+                convData(tabelaInscricao[i].dataInscricao);
+                printf("\n\n");
         }
     }
     printf("Digite o codigo de inscricao que voce deseja deletar: \n");
@@ -478,7 +534,9 @@ void delInscricao(){
         if(tabelaInscricao[i].codigo == vCodigo){
             printf("Matricula: %d", tabelaInscricao[i].matricula);
             printf("\nCod. Disciplina: %d", tabelaInscricao[i].codDisciplina);
-            printf("\nData de inscricao: %d\n\n", tabelaInscricao[i].dataInscricao);
+            printf("\nData de inscricao: ");
+            convData(tabelaInscricao[i].dataInscricao);
+            printf("\n\n");
             
             if (decisao("Voce tem certeza que deseja deletar o registro:\n\n1 - SIM\n2 - NAO\n") == 1){ //CERTEZA QUE DESEJA EXCLUIR?
                 system("clear");
@@ -489,7 +547,7 @@ void delInscricao(){
 	            break;
             }
         }else{
-            if(i == 999){ //ELSE PARA INFORMAR QUE O CODIGO NO FOI LOCALIZADO
+            if(i == 999){ //ELSE PARA INFORMAR QUE O CODIGO N�O FOI LOCALIZADO
                 system("clear");
                 printf("ALERTA: CODIGO NAO LOCALIZADO.\n\n");
                 if (decisao("Deseja tentar deletar novamente:\n\n1 - SIM\n2 - NAO\n") == 1){//DESEJA TENTAR NOVAMENTE?
@@ -502,7 +560,6 @@ void delInscricao(){
     }
     fim_loop:
 }
-
 //--------------------------------------------------FUNCOES DISCIPLINA (PEDRO)-------------------------------------------------------------
 
 // FUNCAO DE PRINT;------------------------------------------------------------------------
@@ -1225,6 +1282,3 @@ int main() {
 
     return 0;
 }
-	//SAIR DO PROGRAMA
-	//system("clear");
-	//decisao("ALERTA! Voce irÃ¡ sair do programa, deseja realmente sair?");
