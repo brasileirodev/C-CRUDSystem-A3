@@ -974,12 +974,6 @@ void deleteTipoCurso() {
 //-----------------------------------------------------------INICIO MAIN--------------------------------------------------------------------
 int main() {
 
-    system("clear");
-    struct Aluno alunos[MAX_ALUNOS];
-    int numAlunos = 0;
-    int menu;
-
-    
 
 
     do {
