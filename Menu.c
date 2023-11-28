@@ -1,12 +1,12 @@
-//@HùCTOR VALENTE (22/11/2023) - Menu e implementaÁ„o da usabilidade inscriÁ„o de disciplina.
-//@LUCAS (23/11/2023) - Menu e implementaÁ„o da usabilidade cadastro de aluno.
-//@HùCTOR VALENTE (23/11/2023) - CorreÁ„o caracter especial + funÁ„o inclus„o em mÈtodo.
-//@HùCTOR VALENTE (25/11/2023) - Funùùo validar matricula + nova funùùo alterar/deletar.
-//Pedro Soares (26/11/2023) - CorreÁ„o de caracter especial.
-//Nathan MuÒoz (26/11/23) - ImplementaÁ„o dos mÈtodos TipoCurso
-//Pedro Soares (27/11/2023) - Revis„o e melhoria de funÁıes
+//@H¬ùCTOR VALENTE (22/11/2023) - Menu e implementa√ß√£o da usabilidade inscri√ß√£o de disciplina.
+//@LUCAS (23/11/2023) - Menu e implementa√ß√£o da usabilidade cadastro de aluno.
+//@H¬ùCTOR VALENTE (23/11/2023) - Corre√ß√£o caracter especial + fun√ß√£o inclus√£o em m√©todo.
+//@H¬ùCTOR VALENTE (25/11/2023) - Fun¬ù¬ùo validar matricula + nova fun¬ù¬ùo alterar/deletar.
+//Pedro Soares (26/11/2023) - Corre√ß√£o de caracter especial.
+//Nathan Mu√±oz (26/11/23) - Implementa√ß√£o dos m√©todos TipoCurso
+//Pedro Soares (27/11/2023) - Revis√£o e melhoria de fun√ß√µes
 //HECTOR VAENTE (27/11/2023) - IMPLEMENTACAO VALIDACAO DE CADASTROS EXISTENTES TABELA INSCRICAO DE DISCIPLINA
-//Pedro Soares (27/11/2023) - Revis„o e melhoria de funÁıes + aula
+//Pedro Soares (27/11/2023) - Revis√£o e melhoria de fun√ß√µes + aula
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,14 +14,17 @@
 #define SIZE 1000
 
 
-#define MAX_ALUNOS 100
-#define MAX_MATRICULA 20
-#define MAX_CPF 11 
-#define MAX_NOME 30
-#define MAX_EMAIL 50
-#define MAX_TIPO_CURSOS 100
 
 //DECLARACAO DE OBJETOS
+struct Aluno {
+    int matricula;
+    int cpf;
+    char nome[SIZE];
+    char sexo[SIZE];
+    char email[SIZE];
+    int codigotipoCurso;
+};
+
 struct inscricaoDisciplina {
     int matricula;
     int codDisciplina;
@@ -42,14 +45,6 @@ struct tipoCurso {
     char turno[SIZE]; 
 }tipoCurso;
 
-struct Aluno {
-    int matricula;
-    char cpf[MAX_CPF];
-    char nome[MAX_NOME];
-    char sexo;
-    char email[MAX_EMAIL];
-    int codigoTipoCurso;
-};
 
 //DECLARACAO DE VARIAVEIS GLOBAIS
 
@@ -61,158 +56,109 @@ struct inscricaoDisciplina tabelaInscricao[SIZE]; //ARRAY
 struct disciplina tabelaDisciplina[SIZE]; // DEFININDO ARRAY DISCIPLINAS UTILIZANDO O "SIZE" PARA DEFINIR UM MAXIMO DE DISCIPLINAS;
 int totalDisciplinas = 0; // VARIAVEL PARA CONTABILIZAR QUANTIDADE DE DISCIPLINA
 //-------------------------------------------------------------------------------------------------------------------------------------------
-
-//struct alunos tabelaAluno[SIZE]; Lucas o seu ARRAY GLOBAL AQUI
-
+struct Aluno tabelaAluno[SIZE];
 //------------------------------------------------------------FUNCOES ALUNO (LUCAS)------------------------------------------------------------
-void imprimirAluno(struct Aluno aluno) {
-    printf("MatrÌcula: %d\n", aluno.matricula);
-    printf("CPF: %s\n", aluno.cpf);
-    printf("Nome: %s\n", aluno.nome);
-    printf("Sexo: %c\n", aluno.sexo);
-    printf("Email: %s\n", aluno.email);
-    printf("CÛdigo do tipo de curso: %d\n", aluno.codigoTipoCurso);
+int ultimaMatricula() {
+    int controlematricula = -1;
+    for (int i = 0; i < SIZE; i++) {
+        if (tabelaAluno[i].matricula != 0) {
+            controlematricula = i;
+        }
+    }
+    return (controlematricula + 1);
 }
 
-void cadastrarAluno(struct Aluno alunos[], int *numAlunos) {
-    if (*numAlunos >= MAX_ALUNOS) {
-        printf("Limite m·ximo de alunos atingido!\n");
-        return;
-    }
+void cadastroAluno() {
+    int i = ultimaMatricula();
 
-    struct Aluno novoAluno;
+    for (i ; i < SIZE; i++) {
+        system("clear");
+        printf("Digite a matricula do aluno: \n");
+        scanf("%d", &tabelaAluno[i].matricula);
 
-    printf("Digite a matrÌcula: ");
-    scanf("%d", &novoAluno.matricula);
+        printf("Digite o CPF:\n");
+        scanf("%d", &tabelaAluno[i].cpf);
+        fflush(stdin);
 
-    while (1) {
-        printf("Digite o CPF: ");
-        scanf("%s", novoAluno.cpf);
+        printf("Digite o nome do aluno: \n");
+        fgets(tabelaAluno[i].nome, SIZE, stdin);
+        fflush(stdin);
 
-        // Verifica se o CPF tem exatamente 11 dÌgitos
-        if (strlen(novoAluno.cpf) != 11) {
-            printf("CPF inv·lido.\n");
-        } else {
+        printf("Digite o sexo do aluno: \n");
+        fgets(tabelaAluno[i].sexo, SIZE, stdin);
+        fflush(stdin);
+
+        printf("Digite o e-mail do aluno: \n");
+        fgets(tabelaAluno[i].email, SIZE, stdin);
+        fflush(stdin);
+
+        printf("Digite o codigo do tipo de curso: \n");
+        scanf("%d", &tabelaAluno[i].codigotipoCurso);
+
+        if (decisao("Deseja incluir outra inscricao?\n\n1 - SIM\n2 - NAO\n") == 2) {
+            system("clear");
             break;
         }
     }
-
-    printf("Digite o nome: ");
-    scanf("%s", novoAluno.nome);
-
-    printf("Digite o sexo: ");
-    scanf(" %c", &novoAluno.sexo);
-
-    printf("Digite o email: ");
-    scanf("%s", novoAluno.email);
-
-    printf("Digite o cÛdigo do tipo de curso: ");
-    scanf("%d", &novoAluno.codigoTipoCurso);
-
-    // Copia o novoAluno para o array de alunos
-    alunos[*numAlunos] = novoAluno;
-
-    (*numAlunos)++;
-
-    printf("Aluno cadastrado com sucesso!\n");
-
-    // Imprime os dados do aluno cadastrado
-    printf("Dados do aluno cadastrado:\n");
-    imprimirAluno(novoAluno);
 }
 
+void imprimirAluno() {
+    for (int i = 0; i < SIZE; i++) {
+        if (tabelaAluno[i].matricula != 0) {
+            printf("Matricula: %d\n", tabelaAluno[i].matricula);
+            printf("CPF: %d\n", tabelaAluno[i].cpf);
+            printf("Nome: %s", tabelaAluno[i].nome);
+            printf("Sexo: %s", tabelaAluno[i].sexo);
+            printf("E-mail: %s", tabelaAluno[i].email);
+            printf("Codigo do Curso: %d\n\n", tabelaAluno[i].codigotipoCurso);
+        }
+    }
+}
 
-void atualizarAluno(struct Aluno alunos[], int numAlunos) {
-    int matricula;
+void altAluno() {
 
-    printf("Digite a matrÌcula do aluno que deseja atualizar: ");
+    int cont = 0;
+    printf("Digite a matricula que voce deseja alterar: \n");
     scanf("%d", &matricula);
 
-    for (int contador = 0; contador < numAlunos; contador++) {
-        if (alunos[contador].matricula == matricula) {
-            printf("Digite a nova matrÌcula: ");
-            scanf("%d", &alunos[contador].matricula);
-
-            while (1) {
-                printf("Digite o novo CPF: ");
-                scanf("%s", alunos[contador].cpf);
-
-                // Verifica se o CPF tem exatamente 11 dÌgitos
-                if (strlen(alunos[contador].cpf) != 11) {
-                    printf("CPF inv·lido.\n");
-                } else {
-                    break;
-                }
-            }
-
-            printf("Digite o novo nome: ");
-            scanf("%s", alunos[contador].nome);
-
-            printf("Digite o sexo: ");
-            scanf(" %c", &alunos[contador].sexo);
-
-            printf("Digite o novo email: ");
-            scanf("%s", alunos[contador].email);
-
-            // Verifica se os campos de nome e email n„o excedem os limites m·ximos
-            if (strlen(alunos[contador].nome) > MAX_NOME || strlen(alunos[contador].email) > MAX_EMAIL) {
-                printf("Um ou mais campos excedem o tamanho m·ximo permitido.\n");
-                return;
-            }
-
-            printf("Digite o novo cÛdigo do tipo de curso: ");
-            scanf("%d", &alunos[contador].codigoTipoCurso);
-            
-            printf("Aluno atualizado com sucesso!\n");
-
-            // Imprime os dados do aluno atualizado
-            printf("Dados do aluno atualizado:\n");
-            imprimirAluno(alunos[contador]);
-            return;
+inicio_loop:
+    system("clear");
+    for (int i = 0; i < SIZE; i++) {
+        if (tabelaAluno[i].matricula == matricula) {
+            tabelaAluno[i].matricula = cont;
+            cont++;
+            printf("\nMatricula: %d\n", tabelaAluno[i].matricula);
+            printf("CPF: %d\n", tabelaAluno[i].cpf);
+            printf("Nome: %s", tabelaAluno[i].nome);
+            printf("Sexo: %s", tabelaAluno[i].sexo);
+            printf("E-mail: %s", tabelaAluno[i].email);
+            printf("Codigo do Curso: %d\n", tabelaAluno[i].codigotipoCurso);
         }
     }
 
-    printf("Aluno com a matrÌcula %d n„o encontrado.\n", matricula);
-}
+    if (decisao("Voce tem certeza que deseja alterar o registro:\n\n1 - SIM\n2 - NAO\n") == 1) {
+        system("clear");
 
-
-void listarAluno(struct Aluno alunos[], int numAlunos) {
-    int matricula;
-
-    printf("Digite a matrÌcula do aluno:");
-    scanf("%d", &matricula);
-
-    for (int contador = 0; contador < numAlunos; contador++) {
-        if (alunos[contador].matricula == matricula) {
-            printf("Dados do aluno:\n");
-            imprimirAluno(alunos[contador]);
-            return;
-        }
-    }
-
-    printf("Aluno com a matrÌcula %d n„o encontrado.\n", matricula);
-}
-
-void excluirAluno(struct Aluno alunos[], int *numAlunos) {
-    int matricula;
-
-    printf("Digite a matrÌcula do aluno que deseja excluir: ");
-    scanf("%d", &matricula);
-
-    for (int contador = 0; contador < *numAlunos; contador++) {
-        if (alunos[contador].matricula == matricula) {
-            for (int contadorY = contador; contadorY < *numAlunos - 1; contadorY++) {
-                alunos[contadorY] = alunos[contadorY + 1];
+	printf("Digite uma nova matricula: \n");
+        scanf("%d", &tabelaAluno[cont].matricula);
+        
+	printf("Digite o nome do aluno: \n");
+        fflush(stdin);
+        fgets(tabelaAluno[cont].nome, SIZE, stdin);
+        fflush(stdin);
+        break;
+    } else {
+        if (i == SIZE - 1) {
+            system("clear");
+            printf("ALERTA: MATRICULA NAO LOCALIZADA.\n\n");
+            if (decisao("Deseja tentar alterar novamente:\n\n1 - SIM\n2 - NAO\n") == 1) {
+                goto inicio_loop;
+            } else {
+                goto fim_loop;
             }
-            (*numAlunos)--;
-            printf("Aluno com a matrÌcula %d excluÌdo com sucesso!\n", matricula);
-            return;
         }
     }
-
-    printf("Aluno com a matrÌcula %d n„o encontrado.\n", matricula);
 }
-
 
 //----------------------------------------------------FUNCOES INSCRICOES & MENU (HECTOR)-----------------------------------------------------
 //FUNCAO NEGRITO - Coloca um texto em negrito. Utilize bold(1) para iniciar e bold(0) para finalizar
@@ -224,9 +170,9 @@ void bold(int status) {
 char convData(int intData) {
     int vDia;
     vDia = intData / 10000;
-    int dia = (vDia / 100) % 100; // Obtùm os primeiros dois dùgitos (DD)
-    int mes = (intData / 10000) % 100; // Obtùm os prùximos dois dùgitos (MM)
-    int ano = intData % 10000; // Obtùm os ùltimos quatro dùgitos (AAAA)
+    int dia = (vDia / 100) % 100; // Obt¬ùm os primeiros dois d¬ùgitos (DD)
+    int mes = (intData / 10000) % 100; // Obt¬ùm os pr¬ùximos dois d¬ùgitos (MM)
+    int ano = intData % 10000; // Obt¬ùm os ¬ùltimos quatro d¬ùgitos (AAAA)
     
     return printf("%02d/%02d/%04d", dia, mes, ano); // Exibe a data no formato desejado
 }
@@ -236,7 +182,7 @@ void menuSecundario(char texto[100]){
 
     int controle;
 
-    controle = strlen(texto); //FUN«AO QUE CONTA CARACTERE
+    controle = strlen(texto); //FUN√áAO QUE CONTA CARACTERE
 	printf(" _________________________________________________________________________________________\n");
 	printf("|                                                                                         |\n");
 	printf("| SISTEMA DE CADASTRO                                                                     |\n");
@@ -301,7 +247,7 @@ int ultimoRegistro(){
     return(controle + 1);
 }
 
-//FUNCAO VALIDACAO CADASTRO MATRICULA - Funcao tem como objetivo garantir o usuario escolheu uma matricula jù existente
+//FUNCAO VALIDACAO CADASTRO MATRICULA - Funcao tem como objetivo garantir o usuario escolheu uma matricula j¬ù existente
 /*int validaMatricula(int matricula){
     for(int i = 0; i < SIZE; i++){
         if(alunos[i].matricula == matricula){
@@ -322,13 +268,13 @@ int ultimoRegistro(){
                     return("CONFIRMACAO");
                     break;
                 }if else(j == 999){
-                    return("ALERTA: Aluno nùo inscrito nesse TIPO DE CURSO.");
+                    return("ALERTA: Aluno n¬ùo inscrito nesse TIPO DE CURSO.");
                     break;
                 }
             }
             alunos[i].codigotipoCurso
         } if else(i == 999){
-            return("ALERTA: Disciplina nùo cadastrada.");
+            return("ALERTA: Disciplina n¬ùo cadastrada.");
             break;
         }
     }
@@ -444,7 +390,7 @@ void altInscricao(){
 	         break;
             }
         }else{
-            if(i == 999){ //ELSE PARA INFORMAR QUE O CODIGO NùO FOI LOCALIZADO
+            if(i == 999){ //ELSE PARA INFORMAR QUE O CODIGO N¬ùO FOI LOCALIZADO
                 system("clear");
                 printf("ALERTA: CODIGO NAO LOCALIZADO.\n\n");
                 if (decisao("Deseja tentar alterar novamente:\n\n1 - SIM\n2 - NAO\n") == 1){//DESEJA TENTAR NOVAMENTE?
@@ -497,7 +443,7 @@ void delInscricao(){
 	            break;
             }
         }else{
-            if(i == 999){ //ELSE PARA INFORMAR QUE O CODIGO NùO FOI LOCALIZADO
+            if(i == 999){ //ELSE PARA INFORMAR QUE O CODIGO N¬ùO FOI LOCALIZADO
                 system("clear");
                 printf("ALERTA: CODIGO NAO LOCALIZADO.\n\n");
                 if (decisao("Deseja tentar deletar novamente:\n\n1 - SIM\n2 - NAO\n") == 1){//DESEJA TENTAR NOVAMENTE?
@@ -539,10 +485,10 @@ void imprimirDisciplinas() {
     }
 }   
 
-// FUN«√O CRIAR DISCIPLINAS--------------------------------------------------------------
+// FUN√á√ÉO CRIAR DISCIPLINAS--------------------------------------------------------------
 
 void incluirDisciplina() {
-    char resposta; //validador de nova inclus„o de curso
+    char resposta; //validador de nova inclus√£o de curso
     int verificadorTipoCurso = 0;
     
     do { //repetidor
@@ -553,7 +499,7 @@ void incluirDisciplina() {
             if (numTabelaTipoCurso <= 0) { // VERIFICA SE EXISTEM CURSOS 
                 
                 system("clear");
-                printf("N„o existem cursos cadastrados, cadastre um curso primeiro");
+                printf("N√£o existem cursos cadastrados, cadastre um curso primeiro");
                 
             } else {
                 
@@ -570,14 +516,14 @@ void incluirDisciplina() {
                 }// FIM DO FOR MOSTRADOR DOS CURSOS CADASTRADOS
                 
                 
-                printf("\nDigite o codigo do tipo de curso ao qual vocÍ deseja atribuir a disciplina: \n");
+                printf("\nDigite o codigo do tipo de curso ao qual voc√™ deseja atribuir a disciplina: \n");
                 getchar();
                 scanf("%d", &verificadorTipoCurso);
                 
                 
-                if ((verificadorTipoCurso > 0) && (verificadorTipoCurso <= numTabelaTipoCurso)) { // VERIFICA SE O C”DIGO ESCOLHIDO EXISTE 
+                if ((verificadorTipoCurso > 0) && (verificadorTipoCurso <= numTabelaTipoCurso)) { // VERIFICA SE O C√ìDIGO ESCOLHIDO EXISTE 
 
-                // PRINT DAS INFORMA«’ES DA DISCIPLINA DE CODIGO ESCOLHIDO
+                // PRINT DAS INFORMA√á√ïES DA DISCIPLINA DE CODIGO ESCOLHIDO
                 
                 system("clear");
                 struct disciplina novaDisciplina; // VARIAVEL LOCAL PARA INCLUIR DISCIPLINAS NO ARRAY 
@@ -594,7 +540,7 @@ void incluirDisciplina() {
                 novaDisciplina.nomeProfessor[strcspn(novaDisciplina.nomeProfessor, "\n")] = '\0'; //limpador de buffer
 
                 novaDisciplina.codigo = totalDisciplinas + 1; //numTabelaTipoCurso = contador de cursos criados na tabela //novoTipoCurso define codigo do curso = tabela +1
-                tabelaDisciplina[totalDisciplinas] = novaDisciplina; // inclui as informaÁıes salvas na variavel local dentro do array utilizando o contador numTabelaTipoCurso 
+                tabelaDisciplina[totalDisciplinas] = novaDisciplina; // inclui as informa√ß√µes salvas na variavel local dentro do array utilizando o contador numTabelaTipoCurso 
                 
                 
                 novaDisciplina.codigoTipoCurso = verificadorTipoCurso; // INCLUI O CODIGO DO TIPO CURSO ESCOLHIDO NA VARIAVEL CODIGO TIPO CURSO DO ARRAY DISCIPLINA
@@ -619,8 +565,8 @@ void incluirDisciplina() {
         
         } else { // FIM DO VERIFICADOR DE SIZE
             system("clear");
-            printf("Erro: Limite m·ximo de disciplinas atingido.\n");
-            resposta = '2';  // ForÁar saÌda do loop se atingir o limite
+            printf("Erro: Limite m√°ximo de disciplinas atingido.\n");
+            resposta = '2';  // For√ßar sa√≠da do loop se atingir o limite
         
         } // FIM DO ELSE VERIFICADOR DE SIZE
     
@@ -629,7 +575,7 @@ void incluirDisciplina() {
     
     printf("Retornando ao menu.\n");
 
-} //FIM DA FUN«√O
+} //FIM DA FUN√á√ÉO
 
 // FUNCAO ALTERAR DISCIPLINAS;----------------------------------------------------------------------
 void alterarDisciplina() {
@@ -644,13 +590,13 @@ void alterarDisciplina() {
     } else { 
     
     system("clear");
-    printf("Digite o codigo da disciplina que vocÍ deseja alterar: \n");
+    printf("Digite o codigo da disciplina que voc√™ deseja alterar: \n");
     scanf("%d", &altDisciplina);
 
-    //VERIFICADOR DE C”DIGO
+    //VERIFICADOR DE C√ìDIGO
     if (altDisciplina > 0 && altDisciplina <= totalDisciplinas) {
 
-    // PRINT DAS INFORMA«’ES DA DISCIPLINA DE CODIGO ESCOLHIDO
+    // PRINT DAS INFORMA√á√ïES DA DISCIPLINA DE CODIGO ESCOLHIDO
     system("clear");
     printf("Codigo: %03d", tabelaDisciplina[altDisciplina - 1].codigo);
     printf("\nNome da Disciplina: %s", tabelaDisciplina[altDisciplina - 1].nome);
@@ -693,11 +639,11 @@ void alterarDisciplina() {
     }
 }
 
-// FUN«√O DELETAR DISCIPLINAS---------------------------------------------------------------------------------
+// FUN√á√ÉO DELETAR DISCIPLINAS---------------------------------------------------------------------------------
 int deletarDisciplina() {
     int delDisciplina = 0;
    
-    // SOLICITANDO C”DIGO A SER EXCLUIDO
+    // SOLICITANDO C√ìDIGO A SER EXCLUIDO
    
     if (totalDisciplinas == 0) { //verifica se existem disciplinas cadastradas
        system("clear");
@@ -711,7 +657,7 @@ int deletarDisciplina() {
     scanf("%d", &delDisciplina);
     getchar();
     
-     // PRINT DAS INFORMA«’ES DA DISCIPLINA DE C”DIGO ESCOLHIDO
+     // PRINT DAS INFORMA√á√ïES DA DISCIPLINA DE C√ìDIGO ESCOLHIDO
     system("clear");
     printf("Codigo: %03d", tabelaDisciplina[delDisciplina - 1].codigo);
     printf("\nNome da Disciplina: %s", tabelaDisciplina[delDisciplina - 1].nome);
@@ -751,21 +697,21 @@ int deletarDisciplina() {
 }
 
 
-//---------------------------------------------------FIM FUN«’ES DISCIPLINA (PEDRO)----------------------------------------
+//---------------------------------------------------FIM FUN√á√ïES DISCIPLINA (PEDRO)----------------------------------------
 
 
-//FUN«’ES DO tIPOCURSO
+//FUN√á√ïES DO tIPOCURSO
 void limparBuffer() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
 void createTipoCurso() {
-    char resposta; //validador de nova inclus„o de curso
+    char resposta; //validador de nova inclus√£o de curso
     
     do { //repetidor
        
-        if (numTabelaTipoCurso < SIZE) { //verifica se o numero de cursos atingiu o m·ximo estipulado
+        if (numTabelaTipoCurso < SIZE) { //verifica se o numero de cursos atingiu o m√°ximo estipulado
             
             system("clear");
             struct tipoCurso novoTipoCurso; //variavel local que inclui o curso criado no array 
@@ -794,8 +740,8 @@ void createTipoCurso() {
 
         } else {
             system("clear");
-            printf("Erro: Limite m·ximo de tipos de curso atingido.\n");
-            resposta = '2';  // ForÁar saÌda do loop se atingir o limite
+            printf("Erro: Limite m√°ximo de tipos de curso atingido.\n");
+            resposta = '2';  // For√ßar sa√≠da do loop se atingir o limite
         }
 
     } while (resposta == '1');
@@ -807,14 +753,14 @@ void readTipoCurso() {
     
     system("clear");
     
-    if (numTabelaTipoCurso == 0){ //Verifica se h· cursos a serem exibidos
+    if (numTabelaTipoCurso == 0){ //Verifica se h√° cursos a serem exibidos
         system("clear");
-        printf("N„o ha tipos de curso cadastrados.\n");
+        printf("N√£o ha tipos de curso cadastrados.\n");
     }else {
         
-    for (int i = 0; i < numTabelaTipoCurso; i++) { //laÁo de repetiÁ„o que exibe os cursos cadastrados 
+    for (int i = 0; i < numTabelaTipoCurso; i++) { //la√ßo de repeti√ß√£o que exibe os cursos cadastrados 
         
-            printf("Codigo: %03d\n", tabelaTipoCurso[i].codigoTipoCurso); // i = posiÁ„o no array
+            printf("Codigo: %03d\n", tabelaTipoCurso[i].codigoTipoCurso); // i = posi√ß√£o no array
             printf("Curso: %s\n", tabelaTipoCurso[i].nome);
             printf("Turno: %s\n\n", tabelaTipoCurso[i].turno);
           
@@ -832,21 +778,21 @@ void updateTipoCurso() {
     
     if (numTabelaTipoCurso == 0) { //verifica se existem cursos cadastrados
        system("clear");
-       printf("N„o ha tipos de curso cadastrados.\n");
+       printf("N√£o ha tipos de curso cadastrados.\n");
     
        
     } else {
     
-    printf("Digite o codigo do tipo de curso que vocÍ deseja alterar: \n");
-    scanf("%d", &altTipoCurso); //atribui o codigo do curso selecionado ‡ variavel altTipoCurso
+    printf("Digite o codigo do tipo de curso que voc√™ deseja alterar: \n");
+    scanf("%d", &altTipoCurso); //atribui o codigo do curso selecionado √† variavel altTipoCurso
     
         
-    //Verificador de cÛdigo 
-     if (altTipoCurso > 0 && altTipoCurso <= numTabelaTipoCurso) { // verifica se o cÛdigo inserido È menor ou igual a quantidade de curso no array
+    //Verificador de c√≥digo 
+     if (altTipoCurso > 0 && altTipoCurso <= numTabelaTipoCurso) { // verifica se o c√≥digo inserido √© menor ou igual a quantidade de curso no array
 
-    // PRINT DAS INFORMA«’ES DO CURSO DE CODIGO ESCOLHIDO
+    // PRINT DAS INFORMA√á√ïES DO CURSO DE CODIGO ESCOLHIDO
      system("clear");
-     printf("\nCodigo: %03d\n", tabelaTipoCurso[altTipoCurso -1].codigoTipoCurso); //acha o curso pelo cÛdigo inserido, e diminui 1 pra localizar as informaÁıes no array
+     printf("\nCodigo: %03d\n", tabelaTipoCurso[altTipoCurso -1].codigoTipoCurso); //acha o curso pelo c√≥digo inserido, e diminui 1 pra localizar as informa√ß√µes no array
      printf("Curso: %s\n", tabelaTipoCurso[altTipoCurso -1].nome);
      printf("Turno: %s\n", tabelaTipoCurso[altTipoCurso -1].turno);
           
@@ -858,11 +804,11 @@ void updateTipoCurso() {
         scanf("%d", &codVerificador);
         getchar();
         // ALTERANDO OS VALORES DOS CURSOS (SEM ALTERAR O CODIGO)
-        if (codVerificador == 1) { //condiÁ„o para que o usu·rio prossiga com a alteraÁ„o
+        if (codVerificador == 1) { //condi√ß√£o para que o usu√°rio prossiga com a altera√ß√£o
             
             system("clear");
             printf("Digite o nome do tipo de curso a ser alterado: \n");
-            fgets(tabelaTipoCurso[altTipoCurso - 1].nome, sizeof(tabelaTipoCurso[altTipoCurso - 1].nome), stdin); //localiza o curso no array pelo cÛdigo inserido -1, e salva novas informaÁıes em cima do mesmo
+            fgets(tabelaTipoCurso[altTipoCurso - 1].nome, sizeof(tabelaTipoCurso[altTipoCurso - 1].nome), stdin); //localiza o curso no array pelo c√≥digo inserido -1, e salva novas informa√ß√µes em cima do mesmo
             tabelaTipoCurso[altTipoCurso - 1].nome[strcspn(tabelaTipoCurso[altTipoCurso - 1].nome, "\n")] = 0; //limpador de buffer
 
             system("clear");
@@ -873,14 +819,14 @@ void updateTipoCurso() {
             system("clear");
             printf("tipo de curso alterado\n");
             
-        } else { //caso o usu·rio n„o deseje prosseguir com a alteraÁ„o, a mensagem È exibida:
+        } else { //caso o usu√°rio n√£o deseje prosseguir com a altera√ß√£o, a mensagem √© exibida:
             system("clear");
             printf("Operacao Cancelada\n");
         }
             
     }else {
     system("clear");
-    printf("Codigo do tipo de curso nao existente\n"); //mensagem exibida caso o cÛdigo inserido n„o exista no array (resposta do if/else verificador)
+    printf("Codigo do tipo de curso nao existente\n"); //mensagem exibida caso o c√≥digo inserido n√£o exista no array (resposta do if/else verificador)
     } 
     }    
     }
@@ -892,16 +838,16 @@ void updateTipoCurso() {
 void deleteTipoCurso() {
     
     
-    // SOLICITANDO C”DIGO A SER EXCLUIDO
+    // SOLICITANDO C√ìDIGO A SER EXCLUIDO
     int delTipoCurso = 0;
     system("clear");
     printf("Digite o codigo do tipo de curso que voce deseja excluir:\n");
     scanf("%d", &delTipoCurso);
     getchar();
     
-     // PRINT DAS INFORMA«’ES DO TIPO DE CURSO DE C”DIGO ESCOLHIDO
+     // PRINT DAS INFORMA√á√ïES DO TIPO DE CURSO DE C√ìDIGO ESCOLHIDO
      system("clear");
-     printf("\nCodigo: %03d\n", tabelaTipoCurso[delTipoCurso -1].codigoTipoCurso); //acha o curso pelo cÛdigo inserido, e diminui 1 pra localizar as informaÁıes no array
+     printf("\nCodigo: %03d\n", tabelaTipoCurso[delTipoCurso -1].codigoTipoCurso); //acha o curso pelo c√≥digo inserido, e diminui 1 pra localizar as informa√ß√µes no array
      printf("Curso: %s\n", tabelaTipoCurso[delTipoCurso -1].nome);
      printf("Turno: %s\n", tabelaTipoCurso[delTipoCurso -1].turno);
 
@@ -936,7 +882,7 @@ void deleteTipoCurso() {
 }
     
     
-//FIM DAS FUN«’ES DO tIPOCURSO
+//FIM DAS FUN√á√ïES DO tIPOCURSO
 
 
 
@@ -1127,7 +1073,7 @@ int main() {
 						
                         system("clear");
 						
-					}while(menu == 6); //MENU IGUAL A 6 VOLTA PARA O MESMO MENU, POR…M IGUAL 5 RETORNA PARA O PRINCIPAL
+					}while(menu == 6); //MENU IGUAL A 6 VOLTA PARA O MESMO MENU, POR√âM IGUAL 5 RETORNA PARA O PRINCIPAL
 					break;
 					
 					system("clear");
@@ -1202,10 +1148,10 @@ int main() {
 				break;
 
 		}    
-    } while(menu != 0);  // Continua enquanto o usuario n√£o escolher sair
+    } while(menu != 0);  // Continua enquanto o usuario n√É¬£o escolher sair
 
     return 0;
 }
 	//SAIR DO PROGRAMA
 	//system("clear");
-	//decisao("ALERTA! Voce ir√° sair do programa, deseja realmente sair?");
+	//decisao("ALERTA! Voce ir√É¬° sair do programa, deseja realmente sair?");
